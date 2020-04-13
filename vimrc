@@ -39,7 +39,7 @@ set showmatch
 set nocompatible              " be iMproved, required
 set noswapfile
 set autoread
-au CursorHold,CursorHoldI * checktime
+au CursorHold,CursorHoldI * if getcmdwintype() == '' | checktime | endif
 
 " strip trailing witespaces
 autocmd BufWritePre * :%s/\s\+$//e
@@ -163,7 +163,7 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set background=dark
 set termguicolors
 set t_ut=
-colorscheme xcodedark-new
+colorscheme xcodedark
 
 set foldcolumn=1
 set updatetime=750
@@ -225,7 +225,7 @@ function! AddFrozenStringLiteral()
     call append(1, "")
   endif
 endfunction
-map <leader>ff :call AddFrozenStringLiteral()<cr>
+" map <leader>ff :call AddFrozenStringLiteral()<cr>
 autocmd BufNewFile *.rb call AddFrozenStringLiteral()
 
 " Tags file
