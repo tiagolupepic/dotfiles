@@ -5,8 +5,8 @@ window:
     x: 0
     y: 0
   dimensions:
-    columns: 240
-    lines: 67
+    columns: 293
+    lines: 82
 shell:
   program: /usr/local/bin/zsh
   args:
