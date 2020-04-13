@@ -1,0 +1,82 @@
+window:
+  decorations: none
+  dynamic_padding: false
+  position:
+    x: 0
+    y: 0
+  dimensions:
+    columns: 240
+    lines: 67
+shell:
+  program: /usr/local/bin/zsh
+  args:
+    - --login
+alt_send_esc: false
+live_config_reload: true
+font:
+  size: 11
+  normal:
+    family: 'JetBrainsMono Nerd Font Mono'
+  bold:
+    family: 'JetBrainsMono Nerd Font Mono'
+  italic:
+    family: 'JetBrainsMono Nerd Font Mono'
+  use_thin_strokes: true
+  # hack mono 1 and 3
+  offset:
+    x: 1
+    y: 2
+  # hack mono 0 and 3
+  glyph_offset:
+    x: 0
+    y: 3
+draw_bold_text_with_bright_colors: true
+selection:
+  save_to_clipboard: false
+debug:
+  log_level: Trace
+
+colors:
+  primary:
+    background: '0x1d1f21'
+    # background: '0x262729'
+    foreground: '0xabb2bf'
+  # normal:
+  #   black: "0x1c1e1f"
+  #   red: "0xf76c7c"
+  #   green: "0x9cd57b"
+  #   yellow: "0xe3d367"
+  #   blue: "0x78cee9"
+  #   magenta: "0xbaa0f8"
+  #   cyan: "0xf3a96a"
+  #   white: "0xe1e2e3"
+  #
+  # bright:
+  #   black: "0x1c1e1f"
+  #   red: "0xf76c7c"
+  #   green: "0x9cd57b"
+  #   yellow: "0xe3d367"
+  #   blue: "0x78cee9"
+  #   magenta: "0xbaa0f8"
+  #   cyan: "0xf3a96a"
+  #   white: "0xe1e2e3"
+  normal:
+    black:   '0x666666'
+    red:     '0xeb606b'
+    green:   '0xc3e88d'
+    yellow:  '0xf7eb95'
+    blue:    '0x80cbc4'
+    magenta: '0xff2f90'
+    cyan:    '0xaeddff'
+    white:   '0xffffff'
+
+  # Bright colors
+  bright:
+    black:   '0xff262b'
+    red:     '0xeb606b'
+    green:   '0xc3e88d'
+    yellow:  '0xf7eb95'
+    blue:    '0x7dc6bf'
+    magenta: '0x6c71c4'
+    cyan:    '0x35434d'
+    white:   '0xffffff'
