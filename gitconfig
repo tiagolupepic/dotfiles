@@ -1,0 +1,38 @@
+[user]
+	name = Tiago Lupepic
+	email = tiagolpc@gmail.com
+
+[includeIf "gitdir:~/code/factorial"]
+    path = ~/.gitconfig-factorial
+
+[core]
+  excludesfile = /Users/tiagolupepic/.gitignore
+	ignorecase = false
+
+[color]
+  status = auto
+  branch = auto
+  diff = auto
+[mergetool]
+	keepBackup = true
+[alias]
+	wdiff = diff --color-words
+	amend = commit --amend -C HEAD
+	lg = log --graph --pretty=format:'%Cred%h%Creset %Cblue[%an]%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%Creset' --abbrev-commit
+[browser "gitscm"]
+	cmd = /bin/sh -c 'open http://git-scm.com/docs/$(basename $1 .html)' --
+[help]
+	browser = gitscm
+[push]
+	default = current
+[rerere]
+	enabled = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
