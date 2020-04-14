@@ -5,7 +5,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export GOPATH=$HOME/code/go
 export PATH=$PATH:$GOPATH/bin
 export FZF_DEFAULT_COMMAND='ag -p ~/.ignore --hidden -g ""'
-export FACTORIAL_PATH="$HOME/code/factorial"
+export FACTORIAL_PATH="$HOME/Projects/factorial"
 
 #export FZF_DEFAULT_COMMAND='fd --type f -H -I -E node_modules -E .git -E "*/tmp/cache" -E tmp/cache'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
