@@ -163,7 +163,23 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set background=dark
 set termguicolors
 set t_ut=
-colorscheme xcodedark
+
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.dark': {
+  \       'allow_italic': 1,
+  \       'override' : {
+  \         'color00' : ['#1d1e1f', '232'],
+  \         'linenumber_bg': ['#202325', '255'],
+  \         'search_fg' : ['#000000', '238'],
+  \         'search_bg' : ['#fade3e', '227'],
+  \         'vertsplit_fg' : ['#333333', '66'],
+  \       }
+  \     }
+  \   }
+  \ }
+
+colorscheme PaperColor
 
 set foldcolumn=1
 set updatetime=750
@@ -185,11 +201,11 @@ let g:signify_update_on_focusgained = 1
 " atom-dark-256 232525
 " edge 2D2E32
 " monokai-tasty 1d1f21
-highlight SignColumn        ctermfg=NONE ctermbg=235 guibg=#202324 guifg=NONE
-highlight SignifySignAdd    ctermfg=148 ctermbg=235 guibg=#202324 guifg=#59BB43
-highlight SignifySignChange ctermfg=186 ctermbg=235 guibg=#202324 guifg=#FAC863
-highlight SignifySignDelete ctermfg=197 ctermbg=235 guibg=#202324 guifg=#EC5F67
-highlight SignifySignChangeDelete ctermfg=208 ctermbg=235 guibg=#202324 guifg=#CB7622
+highlight SignColumn        ctermfg=NONE ctermbg=235 guibg=#202325 guifg=NONE
+highlight SignifySignAdd    ctermfg=148 ctermbg=235 guibg=#202325 guifg=#59BB43
+highlight SignifySignChange ctermfg=186 ctermbg=235 guibg=#202325 guifg=#FAC863
+highlight SignifySignDelete ctermfg=197 ctermbg=235 guibg=#202325 guifg=#EC5F67
+highlight SignifySignChangeDelete ctermfg=208 ctermbg=235 guibg=#202325 guifg=#CB7622
 " highlight! link SignifySignAdd GitGutterAdd
 " highlight! link SignifySignChange GitGutterChange
 " highlight! link SignifySignDelete GitGutterDelete
