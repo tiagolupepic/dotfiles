@@ -269,8 +269,7 @@ function! DeleteBuffer()
   else
     execute 'bprevious'
     if &buftype ==# 'quickfix'
-    execute 'bprevious'
-      :bprevious
+      execute 'bprevious'
     endif
     execute 'bdelete '.btarget
 
@@ -283,9 +282,31 @@ function! DeleteBuffer()
   endif
 endfunction
 
+function! NextBuffer()
+  if &buftype ==# 'quickfix'
+    echo "Can't move to the next buffer!"
+  else
+    execute 'bnext'
+    if &buftype ==# 'quickfix'
+      execute 'bnext'
+    endif
+  endif
+endfunction
+
+function! PreviousBuffer()
+  if &buftype ==# 'quickfix'
+    echo "Can't move to the previous buffer!"
+  else
+    execute 'bprevious'
+    if &buftype ==# 'quickfix'
+      execute 'bprevious'
+    endif
+  endif
+endfunction
+
 " config for buffers
-nnoremap <silent> gb :bnext<BAR>:if &buftype ==# 'quickfix'<Bar>:bnext<Bar>endif<CR>
-nnoremap <silent> gB :bprevious<BAR>:if &buftype ==# 'quickfix'<Bar>:bprevious<Bar>endif<CR>
+nnoremap <silent> gb :call NextBuffer()<CR>
+nnoremap <silent> gB :call PreviousBuffer()<CR>
 nnoremap <silent> <leader>bq :call DeleteBuffer()<CR>
 nnoremap <silent> <leader>lb :Buffers<CR>
 "
