@@ -67,7 +67,7 @@ endfunction
 " Run a given vim command on the results of alt from a given path.
 " See usage below.
 function! AltCommand(path, vim_command)
-  let l:alternate = system("fd -E node_modules/ -E db/ -E public/ -E tmp/ -E vendor/ -E .git/ | alt -f - " . a:path)
+  let l:alternate = system("fd -E node_modules/ -E db/ -E tmp/ -E vendor/ -E .git/ | alt -f - " . a:path)
   if empty(l:alternate)
     echo "No alternate file for " . a:path . " exists!"
   else
