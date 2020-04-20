@@ -1,12 +1,12 @@
 window:
-  decorations: none
+  decorations: full
   dynamic_padding: false
   position:
     x: 0
     y: 0
   dimensions:
     columns: 293
-    lines: 82
+    lines: 80
 shell:
   program: /usr/local/bin/zsh
   args:
@@ -17,10 +17,17 @@ font:
   size: 11
   normal:
     family: 'JetBrainsMono Nerd Font Mono'
+    style: 'Regular'
   bold:
     family: 'JetBrainsMono Nerd Font Mono'
+    style: 'Bold'
   italic:
     family: 'JetBrainsMono Nerd Font Mono'
+    style: 'Italic'
+  bold_italic:
+    family: 'JetBrainsMono Nerd Font Mono'
+    style: 'Bold Italic'
+
   use_thin_strokes: true
   # hack mono 1 and 3
   offset:
@@ -38,45 +45,25 @@ debug:
 
 colors:
   primary:
-    background: '0x1d1f21'
-    # background: '0x262729'
-    foreground: '0xabb2bf'
-  # normal:
-  #   black: "0x1c1e1f"
-  #   red: "0xf76c7c"
-  #   green: "0x9cd57b"
-  #   yellow: "0xe3d367"
-  #   blue: "0x78cee9"
-  #   magenta: "0xbaa0f8"
-  #   cyan: "0xf3a96a"
-  #   white: "0xe1e2e3"
-  #
-  # bright:
-  #   black: "0x1c1e1f"
-  #   red: "0xf76c7c"
-  #   green: "0x9cd57b"
-  #   yellow: "0xe3d367"
-  #   blue: "0x78cee9"
-  #   magenta: "0xbaa0f8"
-  #   cyan: "0xf3a96a"
-  #   white: "0xe1e2e3"
+    # 101112
+    # 1d1f21
+    background: '0x1c1d1e'
+    foreground: '0xc0c5ce'
   normal:
-    black:   '0x666666'
-    red:     '0xeb606b'
-    green:   '0xc3e88d'
-    yellow:  '0xf7eb95'
-    blue:    '0x80cbc4'
-    magenta: '0xff2f90'
-    cyan:    '0xaeddff'
-    white:   '0xffffff'
-
-  # Bright colors
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0x828791'
   bright:
-    black:   '0xff262b'
-    red:     '0xeb606b'
-    green:   '0xc3e88d'
-    yellow:  '0xf7eb95'
-    blue:    '0x7dc6bf'
-    magenta: '0x6c71c4'
-    cyan:    '0x35434d'
-    white:   '0xffffff'
+    black:   '0x5c6370'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0xe6efff'
