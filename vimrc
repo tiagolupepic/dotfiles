@@ -396,6 +396,12 @@ endfunction
 " Transform shell commands to use docker-compose if applicable
 function! TransformCommandToUseDockerCompose(cmd) abort
   if filereadable(".run_with_compose")
+    if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
+      " factorial custom docker compose
+      let current_path = fnamemodify(getcwd(), ':t')
+      return "docker-compose -f " . expand('$FACTORIAL_PATH') . "/docker-compose.yml --project-directory " . expand('$FACTORIAL_PATH') . " run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd
+    endif
+
     return "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd
   else
     return a:cmd
