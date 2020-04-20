@@ -217,7 +217,7 @@ if !has('dgd nvim')
   set ttymouse=xterm2
 endif
 
-let g:ackprg = 'ag --vimgrep'
+let g:ackprg = 'ag -p ~/.ignore --vimgrep'
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 " ruby
 let g:rubycomplete_buffer_loading = 1
