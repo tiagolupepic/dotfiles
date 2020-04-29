@@ -26,7 +26,6 @@ set hidden
 set linespace=1
 set guioptions=
 
-set tags=.tags
 let mapleader=" "
 set hlsearch
 filetype plugin indent on
@@ -124,7 +123,6 @@ nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
 
 " fzf
 nnoremap <C-p> :Files<CR>
-let g:fzf_tags_command = 'ctags -R -f .tags .'
 
 " Expand to directory of current file - http://vimcasts.org/e/14
 cnoremap $$ <C-R>=expand('%:h').'/'<cr>
@@ -245,7 +243,10 @@ endfunction
 autocmd BufNewFile *.rb call AddFrozenStringLiteral()
 
 " Tags file
-let g:autotagTagsFile=".tags"
+set tags=.tags
+let g:fzf_tags_command = 'ctags -R -f .tags .'
+let g:autotagCtagsCmd = 'ctags'
+let g:autotagTagsFile = ".tags"
 
 " map keys
 nnoremap <silent> <leader>t :w<BAR>:TestFile<CR>
