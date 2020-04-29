@@ -224,8 +224,18 @@ function! AddFrozenStringLiteral()
     call append(1, "")
   endif
 endfunction
-" map <leader>ff :call AddFrozenStringLiteral()<cr>
-autocmd BufNewFile *.rb call AddFrozenStringLiteral()
+" autocmd BufNewFile *.rb call AddFrozenStringLiteral()
+
+function! AddTyped()
+  let l:typed = "# typed: true"
+  let l:filename = expand("%")
+
+  if filename =~# "\.rb$"
+    call append(0, typed)
+    call append(1, "")
+  endif
+endfunction
+autocmd BufNewFile *.rb call AddTyped()
 
 " Tags file
 set tags=.tags
