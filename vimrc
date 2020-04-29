@@ -162,22 +162,7 @@ set background=dark
 set termguicolors
 set t_ut=
 
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default.dark': {
-  \       'allow_italic': 1,
-  \       'override' : {
-  \         'color00' : ['#1d1e1f', '232'],
-  \         'linenumber_bg': ['#202325', '255'],
-  \         'search_fg' : ['#000000', '238'],
-  \         'search_bg' : ['#fade3e', '227'],
-  \         'vertsplit_fg' : ['#333333', '66'],
-  \       }
-  \     }
-  \   }
-  \ }
-
-colorscheme PaperColor
+colorscheme Tomorrow-Night-Bright
 
 set foldcolumn=1
 set updatetime=750
