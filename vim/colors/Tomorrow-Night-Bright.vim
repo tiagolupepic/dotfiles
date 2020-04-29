@@ -233,9 +233,9 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Vim Highlighting
-	call <SID>X("Normal", s:foreground, "1d1f21", "")
-	call <SID>X("LineNr", s:selection, "232425", "none")
-	call <SID>X("CursorLineNr", s:yellow, "232425", "none")
+	call <SID>X("Normal", s:foreground, "1d1e1f", "")
+	call <SID>X("LineNr", s:selection, "202325", "none")
+	call <SID>X("CursorLineNr", s:yellow, "202325", "none")
 	call <SID>X("NonText", s:selection, "", "")
 	call <SID>X("SpecialKey", s:selection, "", "")
 	call <SID>X("Search", s:background, s:yellow, "")
@@ -246,14 +246,14 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("StatusLineNC", s:window, s:foreground, "reverse")
 	call <SID>X("VertSplit", s:window, s:window, "none")
 	call <SID>X("Visual", "", s:selection, "")
-	call <SID>X("Directory", s:blue, "", "")
+	call <SID>X("Directory", "aaaaaa", "", "")
 	call <SID>X("ModeMsg", s:green, "", "")
 	call <SID>X("MoreMsg", s:green, "", "")
 	call <SID>X("Question", s:green, "", "")
 	call <SID>X("WarningMsg", s:red, "", "")
 	call <SID>X("MatchParen", "", s:selection, "")
-	call <SID>X("Folded", s:comment, s:background, "")
-	call <SID>X("FoldColumn", "", "232526", "")
+	call <SID>X("Folded", s:comment, '202325', "")
+	call <SID>X("FoldColumn", "", "202325", "")
 	call <SID>X("ExtraWhitespace", "", s:red, "")
 	if version >= 700
 		call <SID>X("CursorLine", "", s:line, "none")
@@ -269,7 +269,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("Constant", s:orange, "", "")
 	call <SID>X("String", s:green, "", "")
 
-	call <SID>X("Comment", s:comment, "", "")
+	call <SID>X("Comment", s:comment, "", "italic")
 	call <SID>X("Todo", s:comment, s:background, "")
 	call <SID>X("Title", s:comment, "", "")
 	call <SID>X("Identifier", s:blue, "", "none")
@@ -297,7 +297,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("Include", s:orange, "", "")
 	call <SID>X("Macro", s:red, "", "")
 	call <SID>X("PreCondit", s:orange, "", "")
-	call <SID>X("EndOfBuffer", "1d1f21", "1d1f21", "")
+	call <SID>X("EndOfBuffer", "1d1e1f", "1d1e1f", "")
 	"call <SID>X("Ignore", "666666", "", "")
 
 	" Vim Highlighting
