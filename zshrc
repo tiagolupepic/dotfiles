@@ -42,10 +42,6 @@ _load_settings "$HOME/.zsh/configs"
 
 alias vim="mvim -v"
 
-if [ -f /Users/tiagolupepic/Projects/xing/aliases.sh ]; then
-	source '/Users/tiagolupepic/Projects/xing/aliases.sh'
-fi
-
 if [[ "$TERM" != "xterm-256color-italic" ]]; then
     if tmux has-session -t 'hack' 2>/dev/null; then
         tmux -u -2 attach-session -t 'hack'
