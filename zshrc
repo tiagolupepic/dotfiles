@@ -41,6 +41,7 @@ _load_settings "$HOME/.zsh/configs"
 [[ -f ~/.aliases ]] && source ~/.aliases
 
 alias vim="mvim -v"
+alias dh='dirs -v'
 
 if [[ "$TERM" != "xterm-256color-italic" ]]; then
     if tmux has-session -t 'hack' 2>/dev/null; then
