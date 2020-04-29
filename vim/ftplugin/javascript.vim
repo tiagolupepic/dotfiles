@@ -13,11 +13,11 @@ if g:colors_name == 'aurora'
   autocmd BufLeave * hi! Identifier guifg=#AB9FF0 gui=bold
 endif
 
-" if g:colors_name == 'Tomorrow-Night-Bright'
-"   autocmd BufEnter *.{js,ts,jsx,tsx} hi! Identifier guifg=#A6A695
-"   autocmd BufLeave * hi! Identifier guifg=#8cb6e1 gui=bold
-" end
-"
+if g:colors_name == 'Tomorrow-Night-Bright'
+  autocmd BufEnter *.{js,ts,jsx,tsx} hi! Identifier guifg=#808080
+  autocmd BufLeave * hi! Identifier guifg=#8cb6e1 gui=bold
+end
+
 if g:colors_name == 'badwolf'
   autocmd BufEnter *.{js,ts,jsx,tsx} hi! Identifier guifg=#998B53 gui=bold
   autocmd BufLeave * hi! Identifier guifg=#ffa724 gui=bold
