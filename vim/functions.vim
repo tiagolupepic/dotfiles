@@ -74,3 +74,96 @@ function! AltCommand(path, vim_command)
     exec a:vim_command . " " . l:alternate
   endif
 endfunction
+
+function! OnFCSDelete()
+    if v:fcs_reason == 'deleted'
+        echohl Error
+        echo "File '" . expand('<afile>') . "' no longer available"
+        set modified
+    else
+        let v:fcs_choice = 'ask'
+    endif
+endfunction
+
+" Transform shell commands to use docker-compose if applicable
+function! TransformCommandToUseDockerCompose(cmd) abort
+  if filereadable(".run_with_compose")
+    if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
+      " factorial custom docker compose
+      let current_path = fnamemodify(getcwd(), ':t')
+      return "docker-compose -f " . expand('$FACTORIAL_PATH') . "/docker-compose.yml --project-directory " . expand('$FACTORIAL_PATH') . " run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd
+    endif
+
+    return "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd
+  else
+    return a:cmd
+  endif
+endfunction
+
+function! AddTyped()
+  let l:typed = "# typed: true"
+  let l:filename = expand("%")
+
+  if filename =~# "\.rb$"
+    call append(0, typed)
+    call append(1, "")
+  endif
+endfunction
+
+function! AddFrozenStringLiteral()
+  let l:literal = "# frozen_string_literal: true"
+  let l:filename = expand("%")
+
+  if filename =~# "\.rb$"
+    call append(0, literal)
+    call append(1, "")
+  endif
+endfunction
+
+function! DeleteBuffer()
+  let btarget = bufnr('%')
+
+  if &buftype ==# 'quickfix'
+    let btotal = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    if btotal == 1
+      execute 'bdelete '.btarget
+    else
+      echo "Can't close this buffer!"
+    endif
+  else
+    execute 'bprevious'
+    if &buftype ==# 'quickfix'
+      execute 'bprevious'
+    endif
+    execute 'bdelete '.btarget
+
+    " when have only the quickfix and we should delete too
+    let qf = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
+    let btotal = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    if !empty(qf) && btotal == 1
+      execute 'bdelete'
+    end
+  endif
+endfunction
+
+function! NextBuffer()
+  if &buftype ==# 'quickfix'
+    echo "Can't move to the next buffer!"
+  else
+    execute 'bnext'
+    if &buftype ==# 'quickfix'
+      execute 'bnext'
+    endif
+  endif
+endfunction
+
+function! PreviousBuffer()
+  if &buftype ==# 'quickfix'
+    echo "Can't move to the previous buffer!"
+  else
+    execute 'bprevious'
+    if &buftype ==# 'quickfix'
+      execute 'bprevious'
+    endif
+  endif
+endfunction
