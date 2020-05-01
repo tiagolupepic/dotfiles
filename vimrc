@@ -136,14 +136,12 @@ cnoremap %% <C-R>=expand('%:t')<cr>
 " :echo expand('%:p:h')   /abc/def          directory containing file ('head')
 cnoremap %$ <C-R>=expand('%:p:h').'/'<cr>
 
+" status line and tab line configs
 set laststatus=2
 set showtabline=2
+set noshowmode
 
-let g:airline_theme='distinguished'
-let g:airline_powerline_fonts=1
 let g:Powerline_symbols='unicode'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'default'
 
 set number
 set expandtab
@@ -285,10 +283,73 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+let g:lightline = {
+      \   'colorscheme': 'default',
+      \   'active': {
+      \     'left': [ [ 'mode', 'paste' ], [ 'gitbranch' ], [ 'filepath' ] ],
+      \     'right': [ [ 'linter_errors', 'linter_warnings', 'lineinfo' ], [ 'fileinfo', 'percent' ] ],
+      \   },
+      \   'inactive': {
+      \     'left': [ [ 'filename' ] ],
+      \     'right': [ [ 'lineinfo' ], [ 'fileinfo' ] ],
+      \   },
+      \   'tabline': {
+      \     'left': [ [ 'buffers' ] ],
+      \     'right': [ [ 'close' ] ],
+      \   },
+      \   'separator': { 'left': '', 'right': '' },
+      \   'subseparator': { 'left': '', 'right': '' },
+      \   'component': {
+      \     'lineinfo': '%l:%-v',
+      \   },
+      \   'component_expand': {
+      \     'buffers': 'lightline#bufferline#buffers',
+      \     'linter_warnings': 'lightline#ale#warnings',
+      \     'linter_errors': 'lightline#ale#errors',
+      \   },
+      \   'component_function': {
+      \     'filepath': 'LightlineFilePath',
+      \     'fileinfo': 'LightlineFileinfo',
+      \     'gitbranch': 'FugitiveHead'
+      \   },
+      \   'component_type': {
+      \     'buffers': 'tabsel',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \   },
+      \ }
+
+function! LightlineFilePath()
+  let filename = expand('%t') !=# '' ? expand('%t') : ''
+  let modified = &modified ? ' +' : ''
+  return filename . modified
+endfunction
+
+function! LightlineFileinfo()
+  if winwidth(0) < 90
+    return ''
+  endif
+
+  let encoding = &fenc !=# "" ? &fenc : &enc
+  let format = &ff
+  let type = &ft !=# "" ? &ft : "no ft"
+  return type . ' | ' . format . ' | ' . encoding
+endfunction
+
+"""" Lightline ALE
+let g:lightline#ale#indicator_warnings = ' '
+let g:lightline#ale#indicator_errors = ' '
+
+"""" Lightline bufferline
+let g:lightline#bufferline#filename_modifier = ':.'
+let g:lightline#bufferline#modified = ' '
+let g:lightline#bufferline#read_only = ''
+let g:lightline#bufferline#unnamed = '[No Name]'
+let g:lightline#bufferline#shorten_path = 1
+
 let g:ale_sign_column_always = 0
 let g:ale_set_signs = 0
 let g:ale_set_highlights = 0
-let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_error = "\uf00d"
 let g:ale_sign_warning = "\uf529"
 highlight ALEErrorSign ctermbg=NONE ctermfg=red
@@ -301,9 +362,6 @@ let g:ale_lint_on_text_changed = 'never'
 " You can disable this option too
 " if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 1
-let airline#extensions#ale#error_symbol = "\uf00d "
-let airline#extensions#ale#warning_symbol= "\uf529 "
-let airline#extensions#ale#show_line_numbers = 1
 
 let g:ale_linters = {'javascript.jsx': ['prettier', 'eslint']}
 let b:ale_fixers = {'javascript': ['eslint']}
