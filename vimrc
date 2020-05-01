@@ -14,6 +14,7 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 
+set ttimeout
 set ttimeoutlen=50
 set title
 set shellpipe=>
@@ -210,7 +211,7 @@ augroup vimrc-ruby
   autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
   autocmd BufNewFile,BufRead *_spec.rb set syntax=rspec
-  autocmd FileType ruby nnoremap <buffer> <leader>cs  :call RubocopFixCs()<cr>
+  autocmd FileType ruby nnoremap <buffer> <leader>cs  :call RubocopFixCs(expand('%'), '!')<cr>
 augroup END
 
 " autocmd BufNewFile *.rb call AddFrozenStringLiteral()

@@ -12,9 +12,19 @@ function! DockerTestFile()
   call ClearEchoAndExecute(command)
 endfunction
 
-function! RubocopFixCs()
-  let command = "bundle exec rubocop -a " . expand('%')
-  call ClearEchoAndExecute(command)
+function! RubocopFixCs(path, vim_command)
+  let l:rubocop = "bundle exec rubocop -a " . a:path
+
+  if filereadable(".run_with_compose")
+    if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
+      " factorial custom docker compose
+      let current_path = fnamemodify(getcwd(), ':t')
+      let l:command = "docker-compose -f " . expand('$FACTORIAL_PATH') . "/docker-compose.yml --project-directory " . expand('$FACTORIAL_PATH') . " run --rm " . fnamemodify(getcwd(), ':t') . " " . l:rubocop
+    else
+      let l:command =  "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . l:rubocop
+    endif
+  endif
+  exec a:vim_command . l:command
 endfunction
 
 function! EslintFix()
