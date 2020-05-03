@@ -321,9 +321,17 @@ let g:lightline = {
       \ }
 
 function! LightlineFilePath()
-  let filename = expand('%t') !=# '' ? expand('%t') : ''
-  let modified = &modified ? ' +' : ''
-  return filename . modified
+  if ! strlen(expand('%:t'))
+    return ''
+  en
+
+  let fname_ful = expand('%')
+  let fname_ful_maxlen = winwidth(0) - 100
+  if strlen(fname_ful) > fname_ful_maxlen
+    return '…'.matchstr(fname_ful, '.\{40}$')
+  endif
+
+  return expand('%')
 endfunction
 
 function! LightlineFileinfo()
@@ -332,8 +340,10 @@ function! LightlineFileinfo()
   endif
 
   let encoding = &fenc !=# "" ? &fenc : &enc
-  let format = &ff
-  let type = &ft !=# "" ? &ft : "no ft"
+  " let format = &ff
+  " let type = &ft !=# "" ? &ft : "no ft"
+  let type = (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft')
+  let format = (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol())
   return type . ' | ' . format . ' | ' . encoding
 endfunction
 
