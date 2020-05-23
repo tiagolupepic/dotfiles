@@ -1,0 +1,10 @@
+node_modules/
+db/
+tmp/
+vendor/
+.git/
+factories/
+*.gemspe
+*.md
+routes.rb
+*.gemspec
