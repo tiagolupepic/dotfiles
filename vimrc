@@ -1,6 +1,8 @@
 source ~/.vim/plugins.vim
 source ~/.vim/functions.vim
 
+let mapleader=" "
+
 set t_Co=256
 " set term=screen-256color
 set wildmenu " cmd line completion a-la zsh
@@ -14,20 +16,25 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 
+" undo support
+set undofile
+set undodir=~/.vim/undodir
+
 set ttimeout
 set ttimeoutlen=50
 set title
+
 set shellpipe=>
+set shellcmdflag=-lc
 set shell=/bin/zsh
+
 " Prevent Vim from clobbering the scrollback buffer. See
 " http://www.shallowsky.com/linux/noaltscreen.html
 set t_ti= t_te=
 
 set hidden
 set linespace=1
-set guioptions=
 
-let mapleader=" "
 set hlsearch
 filetype plugin indent on
 set cc=80
@@ -37,16 +44,14 @@ set backupcopy=yes
 
 set showmatch
 set nocompatible              " be iMproved, required
+set backspace=indent,eol,start
 set noswapfile
 set autoread
-au CursorHold,CursorHoldI * if getcmdwintype() == '' | checktime | endif
-
-" strip trailing witespaces
-autocmd BufWritePre * :%s/\s\+$//e
 
 syntax on
 syntax sync fromstart
 syntax sync minlines=256
+
 set synmaxcol=9999
 set lazyredraw
 set re=1
@@ -55,6 +60,46 @@ set regexpengine=1
 
 set cmdheight=1
 set numberwidth=4
+
+set shortmess=sI
+" show search match X of total [1/N]
+set shortmess-=S
+
+set clipboard=unnamed
+
+" Performance improvments
+if has("mac")
+  set norelativenumber
+
+  set foldlevel=0
+  set foldmethod=manual
+endif
+
+" status line and tab line configs
+set laststatus=2
+set showtabline=2
+set noshowmode
+
+set number
+set expandtab
+set tabstop=2 shiftwidth=2 softtabstop=2
+set autoindent
+set smartindent
+
+" set notermguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set background=dark
+set termguicolors
+set t_ut=
+
+colorscheme badwolf
+
+set foldcolumn=1
+set updatetime=750
+set mouse=a
+
+" mappings
 
 nnoremap <Left> :echo "No left for you!"<CR>
 vnoremap <Left> :<C-u>echo "No left for you!"<CR>
@@ -72,42 +117,18 @@ nnoremap <Down> :echo "No down for you!"<CR>
 vnoremap <Down> :<C-u>echo "No down for you!"<CR>
 inoremap <Down> <C-o>:echo "No down for you!"<CR>
 
+" fix meta keys
+execute "set <M-j>=\ej"
+execute "set <M-k>=\ek"
+execute "set <M-n>=\en"
+execute "set <M-e>=\ee"
+execute "set <M-p>=\ep"
+execute "set <M-b>=\eb"
+execute "set <M-t>=\et"
 
-" let test#ruby#spec_framework = "minitest"
-let test#ruby#spec_framework = "rspec"
-
-" escape alias
-inoremap jj <esc>
-inoremap jJ <esc>
-inoremap Jj <esc>
-inoremap JJ <esc>
-" Keep the cursor in same line when join lines
-nnoremap J mzJ`z
-
-" new tab
-nnoremap <c-w>t :tabnew<cr>
-
-" normal mode
-nnoremap <tab> %
-" visual mode
-vnoremap <tab> %
-
-"Keep search matches in the middle of the window and pulse the line when moving
-"to them.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-let g:gist_clip_command = 'pbcopy'
-
-set clipboard=unnamed
-
-" Performance improvments
-if has("mac")
-  set norelativenumber
-
-  set foldlevel=0
-  set foldmethod=manual
-endif
+" move lines up or down
+nnoremap <M-j> :m .+1<CR>==
+nnoremap <M-k> :m .-2<CR>==
 
 nnoremap <leader>f <ESC>/
 nnoremap <leader>* <ESC>:find<space>
@@ -137,91 +158,16 @@ cnoremap %% <C-R>=expand('%:t')<cr>
 " :echo expand('%:p:h')   /abc/def          directory containing file ('head')
 cnoremap %$ <C-R>=expand('%:p:h').'/'<cr>
 
-" status line and tab line configs
-set laststatus=2
-set showtabline=2
-set noshowmode
+" escape alias
+inoremap jj <esc>
+inoremap jJ <esc>
+inoremap Jj <esc>
+inoremap JJ <esc>
+" Keep the cursor in same line when join lines
+nnoremap J mzJ`z
 
-let g:Powerline_symbols='unicode'
-
-set number
-set expandtab
-set tabstop=2 shiftwidth=2 softtabstop=2
-set autoindent
-set smartindent
-set macmeta
-
-let g:badwolf_darkgutter = 1
-let g:badwolf_tabline = 2
-" let g:molokai_original = 1
-" set notermguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set background=dark
-set termguicolors
-set t_ut=
-
-colorscheme Tomorrow-Night-Bright
-
-set foldcolumn=1
-set updatetime=750
-
-let g:signify_vcs_list = [ 'git' ]
-let g:signify_realtime = 0
-let g:signify_cursorhold_insert = 0
-let g:signify_cursorhold_normal = 0
-let g:signify_update_on_bufenter = 0
-let g:signify_update_on_focusgained = 1
-" hybrid_reverse 1D1F21
-" molokai 1c1d1e
-" badwolf 141413
-" tender 1e1e1e
-" candid 21252B
-" plastic 21252b
-" happy_hacking 202324
-" aurora 232526
-" atom-dark-256 232525
-" edge 2D2E32
-" monokai-tasty 1d1f21
-highlight SignColumn        ctermfg=NONE ctermbg=235 guibg=#202325 guifg=NONE
-highlight SignifySignAdd    ctermfg=148 ctermbg=235 guibg=#202325 guifg=#59BB43
-highlight SignifySignChange ctermfg=186 ctermbg=235 guibg=#202325 guifg=#FAC863
-highlight SignifySignDelete ctermfg=197 ctermbg=235 guibg=#202325 guifg=#EC5F67
-highlight SignifySignChangeDelete ctermfg=208 ctermbg=235 guibg=#202325 guifg=#CB7622
-" highlight! link SignifySignAdd GitGutterAdd
-" highlight! link SignifySignChange GitGutterChange
-" highlight! link SignifySignDelete GitGutterDelete
-" highlight! link SignifySignChangeDelete GitGutterChangeDelete
-" highlight! link SignifySignDeleteFirstLine SignifySignDelete
-
-set mouse=a
-if !has('dgd nvim')
-  set ttymouse=xterm2
-endif
-
-let g:ackprg = 'ag -p ~/.ignore --vimgrep'
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-" ruby
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-
-augroup vimrc-ruby
-  autocmd!
-  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
-  autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
-  autocmd BufNewFile,BufRead *_spec.rb set syntax=rspec
-  autocmd FileType ruby nnoremap <buffer> <leader>cs  :call RubocopFixCs(expand('%'), '!')<cr>
-augroup END
-
-" autocmd BufNewFile *.rb call AddFrozenStringLiteral()
-autocmd BufNewFile *.rb call AddTyped()
-
-" Tags file
-set tags=.tags
-let g:fzf_tags_command = 'ctags -R -f .tags .'
-let g:autotagCtagsCmd = 'ctags'
-let g:autotagTagsFile = ".tags"
+" new tab
+nnoremap <c-w>t :tabnew<cr>
 
 " map keys
 nnoremap <silent> <leader>t :w<BAR>:TestFile<CR>
@@ -254,6 +200,54 @@ silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 " Argument rewrap
 nnoremap <leader>wa :call argumentrewrap#RewrapArguments()<CR>
 
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+let g:signify_vcs_list = [ 'git' ]
+let g:signify_realtime = 0
+let g:signify_cursorhold_insert = 0
+let g:signify_cursorhold_normal = 0
+let g:signify_update_on_bufenter = 0
+let g:signify_update_on_focusgained = 1
+
+highlight SignColumn        ctermfg=NONE ctermbg=235 guibg=#1c1b1a guifg=NONE
+highlight SignifySignAdd    ctermfg=148 ctermbg=235 guibg=#1c1b1a guifg=#59BB43
+highlight SignifySignChange ctermfg=186 ctermbg=235 guibg=#1c1b1a guifg=#FAC863
+highlight SignifySignDelete ctermfg=197 ctermbg=235 guibg=#1c1b1a guifg=#EC5F67
+highlight SignifySignChangeDelete ctermfg=208 ctermbg=235 guibg=#1c1b1a guifg=#CB7622
+
+
+let g:ackprg = 'ag -p ~/.ignore --vimgrep'
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+
+" ruby
+let g:ruby_operators = 1
+let g:ruby_pseudo_operators = 1
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+
+augroup vimrc-ruby
+  autocmd!
+  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
+  autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
+  autocmd BufNewFile,BufRead *_spec.rb set syntax=rspec
+  autocmd FileType ruby nnoremap <buffer> <leader>cs  :call RubocopFixCs(expand('%'), '!')<cr>
+  autocmd FileType ruby nnoremap <buffer> <leader>cb  :call SorbetFixCurrentBuffer(expand('%'), '!')<cr>
+augroup END
+
+" autocmd BufNewFile *.rb call AddFrozenStringLiteral()
+autocmd BufNewFile *.rb call AddTyped()
+
+" Tags file
+set tags=.tags
+let g:fzf_tags_command = 'ctags -R -f .tags .'
+let g:autotagCtagsCmd = 'ctags'
+let g:autotagTagsFile = ".tags"
+let g:autotagStartMethod = 'fork'
+
+let test#ruby#spec_framework = "rspec"
+
 " CursorLine {{{
 set cursorline
 hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=#232526 guifg=NONE gui=NONE
@@ -285,7 +279,7 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 let g:lightline = {
-      \   'colorscheme': 'default',
+      \   'colorscheme': 'distinguished',
       \   'active': {
       \     'left': [ [ 'mode', 'paste' ], [ 'gitbranch' ], [ 'filepath' ] ],
       \     'right': [ [ 'linter_errors', 'linter_warnings', 'lineinfo' ], [ 'fileinfo', 'percent' ] ],
@@ -325,10 +319,14 @@ function! LightlineFilePath()
     return ''
   en
 
+  if winwidth(0) < 95
+    return expand('%:t')
+  end
+
   let fname_ful = expand('%')
-  let fname_ful_maxlen = winwidth(0) - 100
+  let fname_ful_maxlen = winwidth(0) - 110
   if strlen(fname_ful) > fname_ful_maxlen
-    return '…'.matchstr(fname_ful, '.\{40}$')
+    return '…'.matchstr(fname_ful, '.\{' . fname_ful_maxlen . '}$')
   endif
 
   return expand('%')
@@ -357,14 +355,16 @@ let g:lightline#bufferline#modified = ' '
 let g:lightline#bufferline#read_only = ''
 let g:lightline#bufferline#unnamed = '[No Name]'
 let g:lightline#bufferline#shorten_path = 1
+let g:lightline#bufferline#enable_devicons = 1
 
+let g:lexima_enable_endwise_rules = 1
+
+let g:ale_open_list = 0
 let g:ale_sign_column_always = 0
 let g:ale_set_signs = 0
 let g:ale_set_highlights = 0
 let g:ale_sign_error = "\uf00d"
 let g:ale_sign_warning = "\uf529"
-highlight ALEErrorSign ctermbg=NONE ctermfg=red
-highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 let g:ale_echo_msg_error_str = "\uf00d"
 let g:ale_echo_msg_warning_str = "\uf529"
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -373,18 +373,42 @@ let g:ale_lint_on_text_changed = 'never'
 " You can disable this option too
 " if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 1
+" enable fixers when save the file
+let g:ale_fix_on_save = 0
+" only use the declared linters
+let g:ale_linters_explicit = 1
 
-let g:ale_linters = {'javascript.jsx': ['prettier', 'eslint']}
-let b:ale_fixers = {'javascript': ['eslint']}
-let b:ale_linters = {'javascript': ['eslint']}
+" let g:ale_linters = {'javascript.jsx': ['prettier', 'eslint']}
+let g:ale_fixers = {
+      \ 'javascript': ['eslint'],
+      \ 'javascriptreact': ['eslint'],
+      \ 'ruby': ['rubocop'],
+      \ 'typescript': ['eslint'],
+      \ 'css': ['prettier'],
+      \ }
 
-let g:AutoPairsShortcutToggle = ''
-autocmd FileChangedShell * call OnFCSDelete()
+let g:ale_linters = {
+      \ 'ruby': ['rubocop'],
+      \ 'javascript': ['eslint', 'flow'],
+      \ 'javascript.jsx': ['prettier', 'eslint', 'flow'],
+      \ 'javascriptreact': ['eslint', 'flow'],
+      \ 'typescript': ['eslint', 'tsserver']
+      \ }
 
 let g:test#custom_transformations = {'docker_compose': function('TransformCommandToUseDockerCompose')}
 let g:test#transformation = 'docker_compose'
 
-" hi MatchParen      guifg=#5F5F87 guibg=#1d1f21 gui=NONE
-" molokai
-" hi MatchParen      guifg=#FD971F guibg=#000000 gui=bold
-hi MatchParen ctermfg=NONE ctermbg=39 guifg=#FAFF69 guibg=NONE guisp=NONE cterm=NONE,bold gui=NONE,bold
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+
+" Run checktime in buffers, but avoiding the 'Command Line' (q:) window
+au CursorHold,CursorHoldI * if getcmdwintype() == '' | checktime | endif
+
+" strip trailing witespaces
+autocmd BufWritePre * :%s/\s\+$//e
+
+" check the deleted file and give a change to close the buffer
+autocmd FileChangedShell * call OnFCSDelete()
+
+" match parent highlight
+" hi MatchParen ctermfg=NONE ctermbg=39 guifg=#FAFF69 guibg=NONE guisp=NONE cterm=NONE,bold gui=NONE,bold

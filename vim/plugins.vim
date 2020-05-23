@@ -10,7 +10,6 @@ Plugin 'mgee/lightline-bufferline'
 Plugin 'tpope/vim-rails'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'git://github.com/tpope/vim-surround.git'
 Plugin 'janko-m/vim-test'
 Plugin 'pangloss/vim-javascript'
@@ -35,6 +34,9 @@ Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'tpope/vim-haml'
 Plugin 'rust-lang/rust.vim'
+Plugin 'zackhsi/sorbet.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'cohama/lexima.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 "
