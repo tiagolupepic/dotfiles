@@ -58,13 +58,15 @@ let s:bwc = {}
 
 " The most basic of all our colors is a slightly tweaked version of the Molokai
 " Normal text.
-let s:bwc.plain = ['f8f6f2', 15]
+" let s:bwc.plain = ['f8f6f2', 15]
+let s:bwc.plain = ['d0d0d0', 15]
 
 " Pure and simple.
 let s:bwc.snow = ['ffffff', 15]
 let s:bwc.coal = ['000000', 16]
 
 " All of the Gravel colors are based on a brown from Clouds Midnight.
+" d0d0d0
 let s:bwc.brightgravel   = ['d9cec3', 252]
 let s:bwc.lightgravel    = ['998f84', 245]
 let s:bwc.gravel         = ['857f78', 243]
@@ -75,18 +77,22 @@ let s:bwc.darkgravel     = ['242321', 235]
 let s:bwc.blackgravel    = ['1c1b1a', 233]
 let s:bwc.blackestgravel = ['141413', 232]
 let s:bwc.darkgrey       = ['64645e', 239]
-let s:bwc.newblackgravel = ['1d1f21', 110]
+let s:bwc.newblackgravel = ['1d1e1f', 110]
 let s:bwc.newblackestgravel = ['232425', 110]
+let s:bwc.directorygray  = ['aaaaaa', 110]
+let s:bwc.statuslinebg   = ['8a8a8a', 110]
 
 " A color sampled from a highlight in a photo of a glass of Dale's Pale Ale on
 " my desk.
 let s:bwc.dalespale = ['fade3e', 221]
 
+" eec27c
 " A beautiful tan from Tomorrow Night.
 let s:bwc.dirtyblonde = ['f4cf86', 222]
 
 " Delicious, chewy red from Made of Code for the poppiest highlights.
-let s:bwc.taffy = ['ff2c4b', 196]
+let s:bwc.taffy = ['eb4452', 196]
+" let s:bwc.taffy = ['ff2c4b', 196]
 
 " Another chewy accent, but use sparingly!
 let s:bwc.saltwatertaffy = ['8cffba', 121]
@@ -101,20 +107,48 @@ let s:bwc.saltwatertaffy = ['8cffba', 121]
 let s:bwc.tardis = ['0a9dff', 39]
 
 " This one's from Mustang, not Florida!
-let s:bwc.orange = ['ffa724', 214]
+" let s:bwc.orange = ['ffa724', 214]
+" let s:bwc.tuliptree = ['f3aa46', 214]
+
+let s:bwc.tuliptree = ['efba35', 214]
+let s:bwc.ronchi = ['f1b846', 214]
 
 " A limier green from Getafe.
-let s:bwc.lime = ['aeee00', 154]
+"#afd700
+" let s:bwc.lime = ['aeee00', 154]
+let s:bwc.lime = ['afd700', 154]
 
+let s:bwc.deco = ['d9de92', 154]
+let s:bwc.barberry = ['c6e11b', 154]
+
+" 5ab8c8 <= alternative
+let s:bwc.oceanblue = ['53cbb6', 155]
+
+let s:bwc.flamingo = ['ed4f2e', 200]
+
+let s:bwc.bubblegum = ['f3c5e0', 200]
+
+" b57190 <= light purple variation
+let s:bwc.tanhide = ['f78356', 200]
+
+" f984ac
 " Rose's dress in The Idiot's Lantern.
 let s:bwc.dress = ['ff9eb8', 211]
 
-" Another play on the brown from Clouds Midnight.  I love that color.
+" Pink and Purple borrowed PaperColor
+"eb97f4
+let s:bwc.pink = ['d70087', 211]
+let s:bwc.purple = ['af87d7', 211]
+
+"  Another play on the brown from Clouds Midnight.  I love that color.
 let s:bwc.toffee = ['b88853', 137]
+" b19456
 
 " Also based on that Clouds Midnight brown.
 let s:bwc.coffee    = ['c7915b', 173]
 let s:bwc.darkroast = ['88633f', 95]
+
+let s:bwc.coraltree = ['ab7c6e', 95]
 
 " }}}
 " Highlighting Function {{{
@@ -190,12 +224,12 @@ call s:HL('Normal', 'plain', 'newblackgravel')
 
 call s:HL('Folded', 'mediumgravel', 'bg', 'none')
 
-call s:HL('VertSplit', 'lightgravel', 'bg', 'none')
+call s:HL('VertSplit', 'newblackgravel', 'bg', 'none')
 
 call s:HL('CursorLine',   '', 'darkgravel', 'none')
 call s:HL('CursorLineNr',   'dalespale', s:gutter, 'none')
 call s:HL('CursorColumn', '', 'darkgravel')
-call s:HL('ColorColumn',  '', 'darkgravel')
+call s:HL('ColorColumn',  '', s:gutter)
 
 call s:HL('TabLine', 'plain', 'darkgrey', 'none')
 call s:HL('TabLineFill', 'snow', 'darkgrey', 'none')
@@ -214,10 +248,11 @@ call s:HL('IncSearch', 'coal', 'tardis',    'bold')
 
 call s:HL('Underlined', 'fg', '', 'underline')
 
-call s:HL('StatusLine',   'coal', 'tardis',     'bold')
+call s:HL('StatusLine',   'darkgravel', 'statuslinebg', 'bold')
 call s:HL('StatusLineNC', 'snow', 'deepgravel', 'bold')
 
-call s:HL('Directory', 'dirtyblonde', '', 'bold')
+call s:HL('Directory', 'directorygray', '', 'bold')
+call s:HL('Noise', 'directorygray', '', 'bold')
 
 call s:HL('Title', 'lime')
 
@@ -232,8 +267,7 @@ call s:HL('EndOfBuffer', 'newblackgravel',   'newblackgravel')
 call s:HL('Tag', '', '', 'bold')
 
 " hi IndentGuides                  guibg=#373737
-" hi WildMenu        guifg=#66D9EF guibg=#000000
-
+hi WildMenu        guifg=#c4c4c4 guibg=#444444 gui=NONE cterm=NONE
 " }}}
 " Gutter {{{
 
@@ -283,8 +317,8 @@ call s:HL('Label',       'taffy', '', 'none')
 call s:HL('Repeat',      'taffy', '', 'none')
 
 " Functions and variable declarations are orange, because plain looks weird.
-call s:HL('Identifier', 'orange', '', 'bold')
-call s:HL('Function',   'orange', '', 'none')
+call s:HL('Identifier', 'ronchi', '', 'bold')
+call s:HL('Function',   'ronchi', '', 'none')
 
 " Preprocessor stuff is lime, to make it pop.
 "
@@ -293,7 +327,7 @@ call s:HL('Function',   'orange', '', 'none')
 " other code they should stand out, because something tricky is
 " probably going on.
 call s:HL('PreProc',   'lime', '', 'none')
-call s:HL('Macro',     'lime', '', 'none')
+call s:HL('Macro',     'deco', '', 'none')
 call s:HL('Define',    'lime', '', 'none')
 call s:HL('PreCondit', 'lime', '', 'bold')
 
@@ -359,7 +393,7 @@ endif
     call s:HL('CtrlPNoEntries', 'snow', 'taffy', 'bold')
 
     " the matched pattern
-    call s:HL('CtrlPMatch', 'orange', 'bg', 'none')
+    call s:HL('CtrlPMatch', 'ronchi', 'bg', 'none')
 
     " the line prefix '>' in the match window
     call s:HL('CtrlPLinePre', 'deepgravel', 'bg', 'none')
@@ -400,7 +434,7 @@ call s:HL('EasyMotionShade',  'deepgravel', 'bg')
 
 " These are only used if you're me or have copied the <leader>hNUM mappings
 " from my Vimrc.
-call s:HL('InterestingWord1', 'coal', 'orange')
+call s:HL('InterestingWord1', 'coal', 'ronchi')
 call s:HL('InterestingWord2', 'coal', 'lime')
 call s:HL('InterestingWord3', 'coal', 'saltwatertaffy')
 call s:HL('InterestingWord4', 'coal', 'toffee')
@@ -420,7 +454,7 @@ call s:HL('InterestingWord6', 'coal', 'taffy')
 call s:HL('level16c', 'mediumgravel',   '', 'bold')
 call s:HL('level15c', 'dalespale',      '', '')
 call s:HL('level14c', 'dress',          '', '')
-call s:HL('level13c', 'orange',         '', '')
+call s:HL('level13c', 'ronchi',         '', '')
 call s:HL('level12c', 'tardis',         '', '')
 call s:HL('level11c', 'lime',           '', '')
 call s:HL('level10c', 'toffee',         '', '')
@@ -428,7 +462,7 @@ call s:HL('level9c',  'saltwatertaffy', '', '')
 call s:HL('level8c',  'coffee',         '', '')
 call s:HL('level7c',  'dalespale',      '', '')
 call s:HL('level6c',  'dress',          '', '')
-call s:HL('level5c',  'orange',         '', '')
+call s:HL('level5c',  'ronchi',         '', '')
 call s:HL('level4c',  'tardis',         '', '')
 call s:HL('level3c',  'lime',           '', '')
 call s:HL('level2c',  'toffee',         '', '')
@@ -456,7 +490,7 @@ call s:HL('clojureDefine',   'taffy', '', '')
 call s:HL('clojureMacro',    'taffy', '', '')
 call s:HL('clojureCond',     'taffy', '', '')
 
-call s:HL('clojureKeyword', 'orange', '', 'none')
+call s:HL('clojureKeyword', 'ronchi', '', 'none')
 
 call s:HL('clojureFunc',   'dress', '', 'none')
 call s:HL('clojureRepeat', 'dress', '', 'none')
@@ -469,8 +503,8 @@ call s:HL('clojureAnonArg', 'snow', '', 'bold')
 " Common Lisp {{{
 
 call s:HL('lispFunc',           'lime', '', 'none')
-call s:HL('lispVar',            'orange', '', 'bold')
-call s:HL('lispEscapeSpecial',  'orange', '', 'none')
+call s:HL('lispVar',            'ronchi', '', 'bold')
+call s:HL('lispEscapeSpecial',  'ronchi', '', 'none')
 
 " }}}
 " CSS {{{
@@ -492,8 +526,8 @@ end
 call s:HL('cssValueLength', 'toffee', '', 'bold')
 call s:HL('cssColor', 'toffee', '', 'bold')
 call s:HL('cssBraces', 'lightgravel', '', 'none')
-call s:HL('cssIdentifier', 'orange', '', 'bold')
-call s:HL('cssClassName', 'orange', '', 'none')
+call s:HL('cssIdentifier', 'ronchi', '', 'bold')
+call s:HL('cssClassName', 'ronchi', '', 'none')
 
 " }}}
 " Diff {{{
@@ -505,15 +539,15 @@ call s:HL('diffAdded', 'lime', '',)
 call s:HL('diffFile', 'coal', 'taffy', 'bold')
 call s:HL('diffNewFile', 'coal', 'taffy', 'bold')
 
-call s:HL('diffLine', 'coal', 'orange', 'bold')
-call s:HL('diffSubname', 'orange', '', 'none')
+call s:HL('diffLine', 'coal', 'ronchi', 'bold')
+call s:HL('diffSubname', 'ronchi', '', 'none')
 
 " }}}
 " Django Templates {{{
 
 call s:HL('djangoArgument', 'dirtyblonde', '',)
-call s:HL('djangoTagBlock', 'orange', '')
-call s:HL('djangoVarBlock', 'orange', '')
+call s:HL('djangoTagBlock', 'ronchi', '')
+call s:HL('djangoVarBlock', 'ronchi', '')
 " hi djangoStatement guifg=#ff3853 gui=bold
 " hi djangoVarBlock guifg=#f4cf86
 
@@ -553,28 +587,90 @@ call s:HL('javaDocParam', 'dalespale', '', '')
 
 " JavaScript {{{
 "
-" call s:HL('jsBlockLabel', 'dirtyblonde', '', '')
-" call s:HL('jsxComponentName', 'dirtyblonde', '', '')
-" call s:HL('jsxCloseTag', 'tardis', '', '')
+call s:HL('jsThis', 'snow', '', 'italic')
+call s:HL('jsStorageClass', 'tanhide')
+call s:HL('jsGlobalObjects', 'lime')
+call s:HL('jsSuper', 'dress')
+call s:HL('jsDot', 'dress')
+call s:HL('jsTemplateString', 'snow', '', 'italic')
+call s:HL('jsTemplateExpression', 'lightgravel')
+call s:HL('jsDecorator', 'mediumgravel')
+call s:HL('jsDecoratorFunction', 'gravel')
+
+call s:HL('jsClassProperty', 'taffy')
+call s:HL('jsClassDefinition', 'lime')
+
+" function(Map =>)
+" call s:HL('jsFuncArgs', 'dalespale')
+" call s:HL('jsArrowFuncArgs', 'dalespale')
+" call s:HL('jsArrowFunction', 'dalespale')
+
+call s:HL('jsClassFuncName', 'ronchi')
+call s:HL('jsFuncName', 'ronchi')
+call s:HL('jsFuncCall', 'ronchi')
+call s:HL('jsObjectFuncName', 'taffy')
+call s:HL('jsxTag', 'taffy')
+
+call s:HL('jsFuncArgExpression', 'saltwatertaffy')
+call s:HL('jsArguments', 'saltwatertaffy')
+call s:HL('jsOperator', 'deco')
+
+call s:HL('jsClassKeyword', 'taffy')
+call s:HL('jsClassMethodType', 'lime')
+call s:HL('jsAsyncKeyword', 'lime')
+
+call s:HL('jsObjectKeyComputed', 'saltwatertaffy')
+call s:HL('jsNumber', 'tanhide')
+call s:HL('jsFloat', 'tanhide')
+
+" Flow Array<Type>
+call s:HL('jsFlowReturnGroup', 'deco')
+call s:HL('jsFlowType', 'deco')
+call s:HL('jsFlowObject', 'taffy')
+" Array<Type>
+call s:HL('jsFlowTypeCustom', 'lime')
+call s:HL('jsFlowTypeStatement', 'dress')
+call s:HL('jsFlowDefinition', 'deco')
+call s:HL('jsFlowClassGroup', 'deco')
+" the class definition inside the main class
+call s:HL('jsFlowClassDef', 'deco')
+
+"
+" call s:HL('jsFlowTypeValue', 'dress')
+" call s:HL('jsFlowObjectGeneric', 'ronchi')
+" call s:HL('jsFlowTypeKeyword', 'dress')
+
+call s:HL('jsFlowWildcardReturn', 'lightgravel')
+call s:HL('jsFlowReturnMaybe', 'lightgravel')
+
+" JSX
+"
+"
+" hi! link jsxOpenPunct Comment
+" hi! link jsxPunct Comment
+" hi! link jsxClosePunct Comment
+call s:HL('jsxCloseString', 'bubblegum')
+call s:HL('jsxPunct', 'gravel')
+call s:HL('jsxOpenPunct', 'gravel')
 
 " }}}
 " LaTeX {{{
 
 call s:HL('texStatement', 'tardis', '', 'none')
-call s:HL('texMathZoneX', 'orange', '', 'none')
-call s:HL('texMathZoneA', 'orange', '', 'none')
-call s:HL('texMathZoneB', 'orange', '', 'none')
-call s:HL('texMathZoneC', 'orange', '', 'none')
-call s:HL('texMathZoneD', 'orange', '', 'none')
-call s:HL('texMathZoneE', 'orange', '', 'none')
-call s:HL('texMathZoneV', 'orange', '', 'none')
-call s:HL('texMathZoneX', 'orange', '', 'none')
-call s:HL('texMath', 'orange', '', 'none')
-call s:HL('texMathMatcher', 'orange', '', 'none')
+call s:HL('texMathZoneX', 'ronchi', '', 'none')
+call s:HL('texMathZoneA', 'ronchi', '', 'none')
+call s:HL('texMathZoneB', 'ronchi', '', 'none')
+call s:HL('texMathZoneC', 'ronchi', '', 'none')
+call s:HL('texMathZoneD', 'ronchi', '', 'none')
+call s:HL('texMathZoneE', 'ronchi', '', 'none')
+call s:HL('texMathZoneV', 'ronchi', '', 'none')
+call s:HL('texMathZoneX', 'ronchi', '', 'none')
+call s:HL('texMath', 'ronchi', '', 'none')
+call s:HL('texMathMatcher', 'ronchi', '', 'none')
 call s:HL('texRefLabel', 'dirtyblonde', '', 'none')
 call s:HL('texRefZone', 'lime', '', 'none')
 call s:HL('texComment', 'darkroast', '', 'none')
-call s:HL('texDelimiter', 'orange', '', 'none')
+call s:HL('texDelimiter', 'ronchi', '', 'none')
 call s:HL('texZone', 'brightgravel', '', 'none')
 
 augroup badwolf_tex
@@ -605,7 +701,7 @@ call s:HL('replPrompt', 'tardis', '', 'bold')
 " }}}
 " Mail {{{
 
-call s:HL('mailSubject', 'orange', '', 'bold')
+call s:HL('mailSubject', 'ronchi', '', 'bold')
 call s:HL('mailHeader', 'lightgravel', '', '')
 call s:HL('mailHeaderKey', 'lightgravel', '', '')
 call s:HL('mailHeaderEmail', 'snow', '', '')
@@ -615,7 +711,7 @@ call s:HL('mailSignature', 'gravel', '', 'none')
 call s:HL('mailQuoted1', 'gravel', '', 'none')
 call s:HL('mailQuoted2', 'dress', '', 'none')
 call s:HL('mailQuoted3', 'dirtyblonde', '', 'none')
-call s:HL('mailQuoted4', 'orange', '', 'none')
+call s:HL('mailQuoted4', 'ronchi', '', 'none')
 call s:HL('mailQuoted5', 'lime', '', 'none')
 
 " }}}
@@ -627,7 +723,7 @@ call s:HL('markdownOrderedListMarker', 'lightgravel', '', 'bold')
 call s:HL('markdownListMarker', 'lightgravel', '', 'bold')
 call s:HL('markdownItalic', 'snow', '', 'bold')
 call s:HL('markdownBold', 'snow', '', 'bold')
-call s:HL('markdownH1', 'orange', '', 'bold')
+call s:HL('markdownH1', 'ronchi', '', 'bold')
 call s:HL('markdownH2', 'lime', '', 'bold')
 call s:HL('markdownH3', 'lime', '', 'none')
 call s:HL('markdownH4', 'lime', '', 'none')
@@ -669,12 +765,12 @@ call s:HL('pythonCoding',      'gravel', '', 'bold')
 
 " Rainbow parentheses
 call s:HL('hlLevel0', 'gravel')
-call s:HL('hlLevel1', 'orange')
+call s:HL('hlLevel1', 'ronchi')
 call s:HL('hlLevel2', 'saltwatertaffy')
 call s:HL('hlLevel3', 'dress')
 call s:HL('hlLevel4', 'coffee')
 call s:HL('hlLevel5', 'dirtyblonde')
-call s:HL('hlLevel6', 'orange')
+call s:HL('hlLevel6', 'ronchi')
 call s:HL('hlLevel7', 'saltwatertaffy')
 call s:HL('hlLevel8', 'dress')
 call s:HL('hlLevel9', 'coffee')
@@ -691,5 +787,19 @@ call s:HL('VimBracket', 'dress', '', 'none')
 
 " }}}
 
+" Ruby and Ruby on Rails {{{
+"
+call s:HL('rubyInterpolationDelimiter', 'saltwatertaffy', '', 'none')
+call s:HL('rubyCurlyBlockDelimiter', 'gravel', '', 'none')
+call s:HL('rubyStringDelimiter', 'darkroast', '', 'none')
+call s:HL('rubyBoolean', 'dress', '', 'none')
+call s:HL('rubyLambdaOperator', 'saltwatertaffy', '', 'none')
+call s:HL('rubyProcOperator', 'saltwatertaffy', '', 'none')
+call s:HL('rubyArithmeticOperator', 'saltwatertaffy', '', 'none')
+call s:HL('rubyPercentStringDelimiter', 'deco', '', 'none')
+call s:HL('rubyArrayDelimiter', 'gravel', '', 'none')
+call s:HL('rubyCurlyBlockDelimiter', 'gravel', '', 'none')
+
 " }}}
 
+" }}}
