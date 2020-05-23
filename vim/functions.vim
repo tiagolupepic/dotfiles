@@ -17,13 +17,25 @@ function! RubocopFixCs(path, vim_command)
 
   if filereadable(".run_with_compose")
     if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
-      " factorial custom docker compose
-      let current_path = fnamemodify(getcwd(), ':t')
-      let l:command = "docker-compose -f " . expand('$FACTORIAL_PATH') . "/docker-compose.yml --project-directory " . expand('$FACTORIAL_PATH') . " run --rm " . fnamemodify(getcwd(), ':t') . " " . l:rubocop
+      let l:command = "fc-docker-exec " . l:rubocop
     else
       let l:command =  "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . l:rubocop
     endif
   endif
+  exec a:vim_command . l:command
+endfunction
+
+function! SorbetFixCurrentBuffer(path, vim_command)
+  let l:sorbet = "tc --color always -P --file " . a:path
+
+  if filereadable(".run_with_compose")
+    if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
+      let l:command = "fc-docker-sorbet " . l:sorbet
+    else
+      let l:command =  "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . l:sorbet
+    endif
+  endif
+
   exec a:vim_command . l:command
 endfunction
 
@@ -77,7 +89,7 @@ endfunction
 " Run a given vim command on the results of alt from a given path.
 " See usage below.
 function! AltCommand(path, vim_command)
-  let l:alternate = system("fd -E node_modules/ -E db/ -E tmp/ -E vendor/ -E .git/ | alt -f - " . a:path)
+  let l:alternate = system("fd --ignore-file ~/.fd_ignore -t f | alt -f - " . a:path)
   if empty(l:alternate)
     echo "No alternate file for " . a:path . " exists!"
   else
@@ -99,9 +111,7 @@ endfunction
 function! TransformCommandToUseDockerCompose(cmd) abort
   if filereadable(".run_with_compose")
     if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
-      " factorial custom docker compose
-      let current_path = fnamemodify(getcwd(), ':t')
-      return "docker-compose -f " . expand('$FACTORIAL_PATH') . "/docker-compose.yml --project-directory " . expand('$FACTORIAL_PATH') . " run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd
+      return "fc-docker-exec " . a:cmd
     endif
 
     return "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd
