@@ -13,6 +13,7 @@ function fc-docker-exec() {
     docker exec -t -i $CONTAINER $*;
   else
     echo 'Container not found! Run the fc-docker-compose first!'
+    exit 1
   fi
 }
 
@@ -31,5 +32,10 @@ function fc-docker-command() {
     docker exec $CONTAINER $*;
   else
     echo 'Container not found! Run the fc-docker-compose first!'
+    exit 1
   fi
+}
+
+function fc-docker-run-pry() {
+  docker-compose -f $FACTORIAL_PATH/docker-compose.yml --project-directory $FACTORIAL_PATH  run --rm --service-ports --name factorial_back_pry back
 }
