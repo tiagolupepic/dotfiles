@@ -41,15 +41,27 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')
     let g:terminal_color_15 = '#dfdfe0'
   endif
   " hi Normal guifg=#dfdfe0 guibg=#292a30 guisp=NONE gui=NONE cterm=NONE
-  hi Normal guifg=#dfdfe0 guibg=#1d1f21 guisp=NONE gui=NONE cterm=NONE
+  hi Normal guifg=#dfdfe0 guibg=#1d1e1f guisp=NONE gui=NONE cterm=NONE
   hi Cursor guifg=#292a30 guibg=#dfdfe0 guisp=NONE gui=NONE cterm=NONE
   hi None guifg=#dfdfe0 guibg=NONE guisp=NONE gui=NONE cterm=NONE
-  hi CursorLineNr guifg=#dfdfe0 guibg=#2f3037 guisp=NONE gui=NONE cterm=NONE
+  hi CursorLineNr guifg=#ff8170 guibg=#2f3037 guisp=NONE gui=NONE cterm=NONE
   hi FoldColumn guifg=#53606e guibg=#202324 guisp=NONE gui=NONE cterm=NONE
   hi Folded guifg=#53606e guibg=#202324 guisp=NONE gui=NONE cterm=NONE
   hi LineNr guifg=#53606e guibg=#202324 guisp=NONE gui=NONE cterm=NONE
   hi MatchParen guifg=#dfdfe0 guibg=#1266ca guisp=NONE gui=NONE cterm=NONE
-  hi SignColumn guifg=#53606e guibg=NONE guisp=NONE gui=NONE cterm=NONE
+  hi SignColumn        ctermfg=NONE ctermbg=235 guibg=#202324 guifg=NONE
+  hi SignifySignAdd    ctermfg=148 ctermbg=235 guibg=#202324 guifg=#59BB43
+  hi SignifySignChange ctermfg=186 ctermbg=235 guibg=#202324 guifg=#FAC863
+  hi SignifySignDelete ctermfg=197 ctermbg=235 guibg=#202324 guifg=#EC5F67
+  hi SignifySignChangeDelete ctermfg=208 ctermbg=235 guibg=#202324 guifg=#CB7622
+  hi LspDiagnosticsDefaultInformation guibg=#202324
+  hi LspDiagnosticsSignInformation guibg=#202324
+  hi LspDiagnosticsSignHint guibg=#202324
+  hi LspDiagnosticsDefaultWarning guibg=#202324
+  hi LspDiagnosticsSignWarning guibg=#202324
+  hi LspDiagnosticsDefaultError guibg=#202324
+  hi LspDiagnosticsSignError guibg=#202324
+  hi LspDiagnosticsDefaultHint guibg=#202324
   hi EndOfBuffer guifg=#1d1f21 guibg=#1d1f21 guisp=NONE gui=NONE cterm=NONE
   hi Ignore guifg=#53606e guibg=NONE guisp=NONE gui=NONE cterm=NONE
   hi Pmenu guifg=#dfdfe0 guibg=#33343c guisp=NONE gui=NONE cterm=NONE
@@ -85,7 +97,7 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')
   hi Statement guifg=#ff7ab2 guibg=NONE guisp=NONE gui=bold cterm=bold
   hi Type guifg=#acf2e4 guibg=NONE guisp=NONE gui=NONE cterm=NONE
   hi Delimiter guifg=#a3b1bf guibg=NONE guisp=NONE gui=NONE cterm=NONE
-  hi Directory guifg=#6bdfff guibg=NONE guisp=NONE gui=NONE cterm=NONE
+  hi Directory guifg=#aaaaaa guibg=NONE guisp=NONE gui=NONE cterm=NONE
   hi Function guifg=#dabaff guibg=NONE guisp=NONE gui=NONE cterm=NONE
   hi FunctionDef guifg=#6bdfff guibg=NONE guisp=NONE gui=NONE cterm=NONE
   hi Operator guifg=#a3b1bf guibg=NONE guisp=NONE gui=NONE cterm=NONE
@@ -178,6 +190,8 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')
   hi! link markdownHeadingDelimiter markdownDelimiter
   hi! link markdownItalicDelimiter markdownDelimiter
   hi! link markdownListMarker markdownDelimiter
+  hi! link jsDecorator Comment
+  hi jsDecoratorFunction guifg=#7f8c98 guibg=NONE guisp=NONE gui=NONE cterm=NONE
   hi markdownDelimiter guifg=#78c2b3 guibg=NONE guisp=NONE gui=NONE cterm=NONE
   hi markdownCode guifg=#dabaff guibg=#33343c guisp=NONE gui=NONE cterm=NONE
   unlet s:t_Co

@@ -1,15 +1,16 @@
-" Tomorrow Night Bright - Full Colour and 256 Colour
+"Tomorrow Night Bright - Full Colour and 256 Colour
 " http://chriskempson.com
 "
 " Hex colour conversion functions borrowed from the theme "Desert256""
 
 " Default GUI Colours
-let s:foreground = "eaeaea"
+let s:foreground = "d0d0d0"
 let s:background = ""
 let s:selection = "424242"
 let s:line = "2a2a2a"
 let s:comment = "767876"
-let s:red = "df6566"
+let s:red_old = "df6566"
+let s:red = 'e06c75'
 let s:orange = "ed9e56"
 let s:yellow = "ecce58"
 let s:green = "c5d15c"
@@ -18,6 +19,27 @@ let s:blue = "8cb6e1"
 let s:purple = "cfabe0"
 let s:window = "4d5057"
 let s:diffbg = "232323"
+let s:ice = "d6e9ff"
+let s:light_yellow = "c8ae9d"
+let s:petrol = "55606D"
+let s:grey = "abb2bf"
+
+let g:terminal_color_0 = "#282c34"
+let g:terminal_color_8 = "#282c34"
+let g:terminal_color_1 = "#e06c75"
+let g:terminal_color_9 = "#e06c75"
+let g:terminal_color_2 = "#98c379"
+let g:terminal_color_10 = "#98c379"
+let g:terminal_color_3 = "#e5c07b"
+let g:terminal_color_11 = "#e5c07b"
+let g:terminal_color_4 = "#61afef"
+let g:terminal_color_12 = "#61afef"
+let g:terminal_color_5 = "#c678dd"
+let g:terminal_color_13 = "#c678dd"
+let g:terminal_color_6 = "#56b6c2"
+let g:terminal_color_14 = "#56b6c2"
+let g:terminal_color_7 = "#dcdfe4"
+let g:terminal_color_15 = "#dcdfe4"
 
 hi clear
 syntax reset
@@ -234,7 +256,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
 	" Vim Highlighting
 	call <SID>X("Normal", s:foreground, "1d1e1f", "")
-	call <SID>X("LineNr", s:selection, "202325", "none")
+	call <SID>X("LineNr", s:comment, "202325", "none")
 	call <SID>X("CursorLineNr", s:yellow, "202325", "none")
 	call <SID>X("NonText", s:selection, "", "")
 	call <SID>X("SpecialKey", s:selection, "", "")
@@ -244,7 +266,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("TabLineSel", s:foreground, s:background, "reverse")
 	call <SID>X("StatusLine", s:window, s:yellow, "reverse")
 	call <SID>X("StatusLineNC", s:window, s:foreground, "reverse")
-	call <SID>X("VertSplit", s:window, s:window, "none")
+	call <SID>X("VertSplit", "202325", "202325", "none")
 	call <SID>X("Visual", "", s:selection, "")
 	call <SID>X("Directory", "aaaaaa", "", "")
 	call <SID>X("ModeMsg", s:green, "", "")
@@ -254,6 +276,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("MatchParen", "", s:selection, "")
 	call <SID>X("Folded", s:comment, '202325', "")
 	call <SID>X("FoldColumn", "", "202325", "")
+	call <SID>X("SignColumn", s:comment, "202325", "none")
 	call <SID>X("ExtraWhitespace", "", s:red, "")
 	if version >= 700
 		call <SID>X("CursorLine", "", s:line, "none")
@@ -270,7 +293,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("String", s:green, "", "")
 
 	call <SID>X("Comment", s:comment, "", "italic")
-	call <SID>X("Todo", s:comment, s:background, "")
+	call <SID>X("SpecialComment", s:comment, "", "italic")
+	call <SID>X("Todo", s:foreground, "", "bold")
 	call <SID>X("Title", s:comment, "", "")
 	call <SID>X("Identifier", s:blue, "", "none")
 	call <SID>X("Statement", s:purple, "", "")
@@ -289,7 +313,6 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("SpecialChar", s:red, "", "")
 	call <SID>X("Tag", s:red, "", "")
 	call <SID>X("Delimiter", s:aqua, "", "")
-	call <SID>X("SpecialComment", s:comment, "", "")
 	call <SID>X("Debug", s:red, "", "")
 
 	call <SID>X("PreProc", s:red, "", "none")
@@ -319,6 +342,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
 	" Ruby Highlighting
 	call <SID>X("rubySymbol", s:red, "", "")
+	call <SID>X("rubyMacro", s:purple, "", "")
+	call <SID>X("rubyEntities", s:purple, "", "")
 	call <SID>X("rubyConstant", s:orange, "", "")
 	call <SID>X("rubyAccess", s:yellow, "", "")
 	call <SID>X("rubyAttribute", s:blue, "", "")
@@ -336,7 +361,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("rubyArrayDelimiter", s:aqua, "", "")
 	call <SID>X("rubyInterpolationDelimiter", s:aqua, "", "")
 	call <SID>X("rubyCurlyBlockDelimiter", s:aqua, "", "")
-	call <SID>X("rubyTodo", s:yellow, "", "bold")
+	call <SID>X("rubyTodo", s:comment, "", "bold")
 
 	" Python Highlighting
 	call <SID>X("pythonInclude", s:purple, "", "")
@@ -356,9 +381,92 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("javaScriptRepeat", s:purple, "", "")
 	call <SID>X("javaScriptNumber", s:orange, "", "")
 	call <SID>X("javaScriptMember", s:orange, "", "")
-    call <SID>X("javascriptNull", s:orange, "", "")
-    call <SID>X("javascriptGlobal", s:blue, "", "")
-    call <SID>X("javascriptStatement", s:red, "", "")
+  call <SID>X("javascriptNull", s:orange, "", "")
+  call <SID>X("javascriptGlobal", s:blue, "", "")
+  call <SID>X("javascriptStatement", s:red, "", "")
+
+  call <SID>X("jsCommentTodo", s:foreground, "", "bold")
+  call <SID>X("jsDecorator", s:comment, "", "bold")
+  call <SID>X("jsDecoratorFunction", s:comment, "", "")
+
+  call <SID>X('jsThis', s:red, "", "")
+  " call <SID>X('jsStorageClass', s:light_yellow, "", "")
+  " call <SID>X('jsGlobalObjects', 'indiankhaki')
+  " call <SID>X('jsSuper', 'dress')
+  " call <SID>X('jsDot', 'gravel')
+  " call <SID>X('jsTemplateString', 'snow', '', 'italic')
+  " call <SID>X('jsTemplateExpression', 'lightgravel')
+  "
+  " call <SID>X('jsClassProperty', 'taffy')
+  " call <SID>X('jsClassDefinition', 'tuliptree')
+  " call <SID>X('jsCatch', 'tuliptree')
+  " call <SID>X('jsTry', 'tuliptree')
+  "
+  " " function(Map =>)
+  " call <SID>X('jsFuncArgs', 'zinnwaldite')
+  " call <SID>X('jsArrowFuncArgs', 'dress')
+  " call <SID>X('jsArrowFunction', 'dress')
+  "
+  " call <SID>X('jsClassFuncName', 'tuliptree', '', 'none')
+  " call <SID>X('jsFuncName', 'ronchi')
+  " call <SID>X('jsFuncCall', 'ronchi')
+  " call <SID>X('jsObjectFuncName', 'taffy')
+  " call <SID>X('jsObjectValue', 'plain')
+  " call <SID>X('jsObjectProp', 'plain')
+  "
+  " call <SID>X('jsExportDefault', 'tuliptree')
+  "
+  "
+  " call <SID>X('jsFuncArgExpression', 'saltwatertaffy')
+  " call <SID>X('jsArguments', 'saltwatertaffy')
+  " call <SID>X('jsOperator', 'gravel')
+  "
+  " call <SID>X('jsClassKeyword', 'taffy')
+  " call <SID>X('jsClassMethodType', 'taffy')
+  " call <SID>X('jsAsyncKeyword', 'taffy')
+  "
+  " call <SID>X('jsObjectKeyComputed', 'lightgravel')
+  " call <SID>X('jsBooleanTrue', 'tacao')
+  " call <SID>X('jsBooleanFalse', 'tacao')
+  " call <SID>X('jsNumber', 'tacao')
+  " call <SID>X('jsFloat', 'tacao')
+  "
+  " call <SID>X('jsReturn', 'flamingo')
+
+  " #dcdfe4
+  " Flow Array<Type>
+  call <SID>X('jsFlowReturnGroup', s:ice, "", "")
+  call <SID>X('jsFlowType', s:light_yellow, "", "")
+  call <SID>X('jsFlowObject', s:ice, "", "")
+  " Array<Type>
+  call <SID>X('jsFlowTypeCustom', s:ice, "", "")
+  call <SID>X('jsFlowTypeStatement', s:ice, "", "")
+  call <SID>X('jsFlowDefinition', s:ice, "", "")
+  call <SID>X('jsFlowClassGroup', s:ice, "", "")
+  " the class definition inside the main class
+  call <SID>X('jsflowclassdef', s:ice, "", "")
+
+  "
+  " call <SID>X('jsFlowTypeValue', 'dress')
+  " call <SID>X('jsFlowObjectGeneric', 'ronchi')
+  " call <SID>X('jsFlowTypeKeyword', 'dress')
+
+  call <SID>X('jsFlowWildcardReturn', s:comment, "", "")
+  call <SID>X('jsFlowReturnMaybe', s:comment, "", "")
+  "
+  " JSX
+  "
+  "
+  " hi! link jsxOpenPunct Comment
+  " hi! link jsxPunct Comment
+  " hi! link jsxClosePunct Comment
+  "
+  call <SID>X('jsxCloseString', s:grey, "", "")
+  call <SID>X('jsxPunct', s:comment, "", "")
+  call <SID>X('jsxOpenPunct', s:grey, "", "")
+  call <SID>X('jsxAttrib', s:light_yellow, "", "")
+  call <SID>X('jsxTag', s:blue, "", "")
+
 
 	" HTML Highlighting
 	call <SID>X("htmlTag", s:red, "", "")
@@ -374,6 +482,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("DiffAdd", s:green, s:diffbg, "")
 	call <SID>X("DiffText", s:blue, s:diffbg, "")
 	call <SID>X("DiffChange", s:yellow, s:diffbg, "")
+	call <SID>X("DiffNewFile", s:green, s:diffbg, "")
+	call <SID>X("DiffAdded", s:green, s:diffbg, "")
 
 	" Lua Highlighting
 	call <SID>X("luaStatement", s:purple, "", "")

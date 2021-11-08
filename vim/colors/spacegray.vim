@@ -50,9 +50,12 @@ if g:spacegray_low_contrast
   hi Normal        ctermbg=235  ctermfg=250    guibg=#262626  guifg=#B3B8C4  cterm=NONE      gui=NONE
   hi Terminal      ctermbg=235  ctermfg=250    guibg=#262626  guifg=#B3B8C4  cterm=NONE      gui=NONE
 else
-  hi Normal        ctermbg=234  ctermfg=250    guibg=#111314  guifg=#B3B8C4  cterm=NONE      gui=NONE
-  hi Terminal      ctermbg=234  ctermfg=250    guibg=#111314  guifg=#B3B8C4  cterm=NONE      gui=NONE
+  hi Normal        ctermbg=234  ctermfg=250    guibg=#1d1e1f  guifg=#B3B8C4  cterm=NONE      gui=NONE
+  hi Terminal      ctermbg=234  ctermfg=250    guibg=#1d1e1f  guifg=#B3B8C4  cterm=NONE      gui=NONE
 endif
+
+" 14140F
+hi EndOfBuffer    ctermbg=234  ctermfg=234    guibg=#1d1e1f  guifg=#1d1e1f  cterm=NONE      gui=NONE
 
 if g:spacegray_use_italics
   hi Comment       ctermbg=NONE ctermfg=59     guibg=NONE     guifg=#515F6A  cterm=italic    gui=italic

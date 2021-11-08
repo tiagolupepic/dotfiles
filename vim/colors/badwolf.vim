@@ -77,21 +77,29 @@ let s:bwc.darkgravel     = ['242321', 235]
 let s:bwc.blackgravel    = ['1c1b1a', 233]
 let s:bwc.blackestgravel = ['141413', 232]
 let s:bwc.darkgrey       = ['64645e', 239]
-let s:bwc.newblackgravel = ['1d1e1f', 110]
-let s:bwc.newblackestgravel = ['232425', 110]
+let s:bwc.newblackgravel = ['1a1a1a', 110]
+let s:bwc.newblackestgravel = ['1d1e1f', 110]
 let s:bwc.directorygray  = ['aaaaaa', 110]
 let s:bwc.statuslinebg   = ['8a8a8a', 110]
+let s:bwc.tablinebg      = ['303030', 254]
+let s:bwc.tablinefg      = ['8a8a8a', 251]
 
 " A color sampled from a highlight in a photo of a glass of Dale's Pale Ale on
 " my desk.
-let s:bwc.dalespale = ['fade3e', 221]
+let s:bwc.dalespale = ['f6e84f', 221]
 
 " eec27c
 " A beautiful tan from Tomorrow Night.
-let s:bwc.dirtyblonde = ['f4cf86', 222]
+" let s:bwc.dirtyblonde = ['f4cf86', 222]
+
+" let s:bwc.dirtyblonde = ['edd09e', 222]
+let s:bwc.dirtyblonde = ['dac887', 222]
 
 " Delicious, chewy red from Made of Code for the poppiest highlights.
-let s:bwc.taffy = ['eb4452', 196]
+" original
+" let s:bwc.taffy = ['eb4452', 196]
+let s:bwc.taffy = ['f63f51', 196]
+let s:bwc.monotaffy = ['F78A95', 196]
 " let s:bwc.taffy = ['ff2c4b', 196]
 
 " Another chewy accent, but use sparingly!
@@ -106,20 +114,32 @@ let s:bwc.saltwatertaffy = ['8cffba', 121]
 " * A REPL prompt
 let s:bwc.tardis = ['0a9dff', 39]
 
+let s:bwc.malibu = ['7cc3f6', 39]
+
 " This one's from Mustang, not Florida!
 " let s:bwc.orange = ['ffa724', 214]
 " let s:bwc.tuliptree = ['f3aa46', 214]
 
 let s:bwc.tuliptree = ['efba35', 214]
-let s:bwc.ronchi = ['f1b846', 214]
+" the yellow (orange)
+" let s:bwc.ronchi = ['fdba13', 214]
+" bright yellow
+let s:bwc.ronchi = ['edd351', 214]
+" let s:bwc.ronchi = ['f1b846', 214]
 
 " A limier green from Getafe.
 "#afd700
 " let s:bwc.lime = ['aeee00', 154]
 let s:bwc.lime = ['afd700', 154]
-
 let s:bwc.deco = ['d9de92', 154]
+let s:bwc.springrain = ['a8cbb7', 154]
+let s:bwc.lime_comp = ['9BB381', 154]
+
+let s:bwc.botticelli = ['BED0D4', 154]
+let s:bwc.lavendergrey = ['94a8c1', 154]
+
 let s:bwc.barberry = ['c6e11b', 154]
+let s:bwc.lightbarberry = ['C3E004', 154]
 
 " 5ab8c8 <= alternative
 let s:bwc.oceanblue = ['53cbb6', 155]
@@ -130,15 +150,24 @@ let s:bwc.bubblegum = ['f3c5e0', 200]
 
 " b57190 <= light purple variation
 let s:bwc.tanhide = ['f78356', 200]
+" light orange variation
+let s:bwc.tacao = ['eaa985', 200]
+let s:bwc.terracota = ['e48858', 200]
+let s:bwc.burntsienna = ['e7885a', 200]
 
 " f984ac
 " Rose's dress in The Idiot's Lantern.
 let s:bwc.dress = ['ff9eb8', 211]
 
+let s:bwc.zinnwaldite = ['ebafa4', 211]
+
 " Pink and Purple borrowed PaperColor
 "eb97f4
 let s:bwc.pink = ['d70087', 211]
+let s:bwc.thistle = ['d6b3ce', 211]
 let s:bwc.purple = ['af87d7', 211]
+let s:bwc.portage = ['9c98ed', 211]
+let s:bwc.coldpurple = ['b2a1d5', 211]
 
 "  Another play on the brown from Clouds Midnight.  I love that color.
 let s:bwc.toffee = ['b88853', 137]
@@ -149,6 +178,24 @@ let s:bwc.coffee    = ['c7915b', 173]
 let s:bwc.darkroast = ['88633f', 95]
 
 let s:bwc.coraltree = ['ab7c6e', 95]
+let s:bwc.indiankhaki = ['c4aa8f', 150]
+
+let g:terminal_color_0 = "#282c34"
+let g:terminal_color_8 = "#282c34"
+let g:terminal_color_1 = "#e06c75"
+let g:terminal_color_9 = "#e06c75"
+let g:terminal_color_2 = "#98c379"
+let g:terminal_color_10 = "#98c379"
+let g:terminal_color_3 = "#e5c07b"
+let g:terminal_color_11 = "#e5c07b"
+let g:terminal_color_4 = "#61afef"
+let g:terminal_color_12 = "#61afef"
+let g:terminal_color_5 = "#c678dd"
+let g:terminal_color_13 = "#c678dd"
+let g:terminal_color_6 = "#56b6c2"
+let g:terminal_color_14 = "#56b6c2"
+let g:terminal_color_7 = "#dcdfe4"
+let g:terminal_color_15 = "#dcdfe4"
 
 " }}}
 " Highlighting Function {{{
@@ -191,11 +238,11 @@ endfunction
 " }}}
 " Configuration Options {{{
 
-if exists('g:badwolf_darkgutter') && g:badwolf_darkgutter
+" if exists('g:badwolf_darkgutter') && g:badwolf_darkgutter
     let s:gutter = 'newblackestgravel'
-else
-    let s:gutter = 'blackgravel'
-endif
+" else
+"     let s:gutter = 'blackgravel'
+" endif
 
 if exists('g:badwolf_tabline')
     if g:badwolf_tabline == 0
@@ -231,11 +278,11 @@ call s:HL('CursorLineNr',   'dalespale', s:gutter, 'none')
 call s:HL('CursorColumn', '', 'darkgravel')
 call s:HL('ColorColumn',  '', s:gutter)
 
-call s:HL('TabLine', 'plain', 'darkgrey', 'none')
-call s:HL('TabLineFill', 'snow', 'darkgrey', 'none')
-call s:HL('TabLineSel', 'deepgravel', 'snow', 'bold')
+call s:HL('TabLine', 'tablinebg', 'tablinebg', 'none')
+call s:HL('TabLineFill', 'tablinefg', 'tablinebg', 'none')
+call s:HL('TabLineSel', 'blackestgravel', 'statuslinebg', 'bold')
 
-call s:HL('MatchParen', 'dalespale', 'darkgravel', 'bold')
+call s:HL('MatchParen', 'dalespale', 'newblackgravel', 'bold')
 
 call s:HL('NonText',    'deepgravel', 'bg')
 call s:HL('SpecialKey', 'deepgravel', 'bg')
@@ -243,13 +290,15 @@ call s:HL('SpecialKey', 'deepgravel', 'bg')
 call s:HL('Visual',    '',  'deepgravel')
 call s:HL('VisualNOS', '',  'deepgravel')
 
-call s:HL('Search',    'coal', 'dalespale', 'bold')
-call s:HL('IncSearch', 'coal', 'tardis',    'bold')
+call s:HL('Search',    'newblackgravel', 'dalespale', 'none')
+call s:HL('IncSearch', 'coal', 'tardis',    'none')
 
 call s:HL('Underlined', 'fg', '', 'underline')
 
-call s:HL('StatusLine',   'darkgravel', 'statuslinebg', 'bold')
+call s:HL('StatusLine',   'coal', 'tardis', 'bold')
 call s:HL('StatusLineNC', 'snow', 'deepgravel', 'bold')
+
+call s:HL('WildMenu', 'coal', 'malibu', 'bold')
 
 call s:HL('Directory', 'directorygray', '', 'bold')
 call s:HL('Noise', 'directorygray', '', 'bold')
@@ -267,7 +316,6 @@ call s:HL('EndOfBuffer', 'newblackgravel',   'newblackgravel')
 call s:HL('Tag', '', '', 'bold')
 
 " hi IndentGuides                  guibg=#373737
-hi WildMenu        guifg=#c4c4c4 guibg=#444444 gui=NONE cterm=NONE
 " }}}
 " Gutter {{{
 
@@ -301,24 +349,36 @@ call s:HL('iCursor', 'coal', 'tardis', 'none')
 call s:HL('Special', 'plain')
 
 " Comments are slightly brighter than folds, to make 'headers' easier to see.
-call s:HL('Comment',        'gravel')
+call s:HL('Comment',        'gravel', '', 'italic')
 call s:HL('Todo',           'snow', 'bg', 'bold')
 call s:HL('SpecialComment', 'snow', 'bg', 'bold')
+call s:HL('commentTSConstant', 'gravel', '', 'italic')
 
 " Strings are a nice, pale straw color.  Nothing too fancy.
 call s:HL('String', 'dirtyblonde')
+call s:HL('TSString', 'dirtyblonde', '', 'none')
 
 " Control flow stuff is taffy.
 call s:HL('Statement',   'taffy', '', 'bold')
+call s:HL('TSStatement',   'taffy', '', 'bold')
 call s:HL('Keyword',     'taffy', '', 'bold')
+call s:HL('TSKeyword',     'taffy', '', 'bold')
 call s:HL('Conditional', 'taffy', '', 'bold')
+call s:HL('TSConditional', 'taffy', '', 'bold')
 call s:HL('Operator',    'taffy', '', 'none')
+call s:HL('TSOperator',    'taffy', '', 'none')
 call s:HL('Label',       'taffy', '', 'none')
+call s:HL('TSLabel',       'taffy', '', 'none')
 call s:HL('Repeat',      'taffy', '', 'none')
+call s:HL('TSRepeat',      'taffy', '', 'none')
+call s:HL('TSProperty',  'indiankhaki', '', 'none')
+call s:HL('TSInclude',  'lime', '', 'none')
 
 " Functions and variable declarations are orange, because plain looks weird.
 call s:HL('Identifier', 'ronchi', '', 'bold')
+call s:HL('TSIdentifier', 'ronchi', '', 'bold')
 call s:HL('Function',   'ronchi', '', 'none')
+call s:HL('TSFunction',   'ronchi', '', 'none')
 
 " Preprocessor stuff is lime, to make it pop.
 "
@@ -338,18 +398,32 @@ call s:HL('Character', 'toffee', '', 'bold')
 call s:HL('Boolean',   'toffee', '', 'bold')
 
 call s:HL('Number', 'toffee', '', 'bold')
+call s:HL('TSNumber', 'toffee', '', 'bold')
 call s:HL('Float',  'toffee', '', 'bold')
+call s:HL('TSFloat',  'toffee', '', 'bold')
 
 " Not sure what 'special character in a constant' means, but let's make it pop.
 call s:HL('SpecialChar', 'dress', '', 'bold')
 
 call s:HL('Type', 'dress', '', 'none')
+call s:HL('TSType', 'dress', '', 'none')
 call s:HL('StorageClass', 'taffy', '', 'none')
+call s:HL('TSStorageClass', 'taffy', '', 'none')
 call s:HL('Structure', 'taffy', '', 'none')
+call s:HL('TSStructure', 'taffy', '', 'none')
 call s:HL('Typedef', 'taffy', '', 'bold')
+call s:HL('TSTypedef', 'taffy', '', 'bold')
 
 " Make try/catch blocks stand out.
 call s:HL('Exception', 'lime', '', 'bold')
+call s:HL('TSException', 'lime', '', 'bold')
+
+call s:HL('TSVariable', 'plain', '', '')
+call s:HL('TSFunction', 'plain', '', '')
+call s:HL('TSKeywordFunction', 'lime', '', '')
+call s:HL('TSConstBuiltin', 'saltwatertaffy', '', '')
+
+call s:HL('TSTag', 'lime', '', '')
 
 " Misc
 call s:HL('Error',  'snow',   'taffy', 'bold')
@@ -534,7 +608,7 @@ call s:HL('cssClassName', 'ronchi', '', 'none')
 
 call s:HL('gitDiff', 'lightgravel', '',)
 
-call s:HL('diffRemoved', 'dress', '',)
+call s:HL('diffRemoved', 'taffy', '',)
 call s:HL('diffAdded', 'lime', '',)
 call s:HL('diffFile', 'coal', 'taffy', 'bold')
 call s:HL('diffNewFile', 'coal', 'taffy', 'bold')
@@ -551,6 +625,40 @@ call s:HL('djangoVarBlock', 'ronchi', '')
 " hi djangoStatement guifg=#ff3853 gui=bold
 " hi djangoVarBlock guifg=#f4cf86
 
+" }}}
+"
+" Go {{{
+"
+call s:HL('goConstants', 'portage')
+" after the dot type
+" Match a sequence of word characters coming after a '.
+call s:HL('goField', 'springrain')
+" func name
+call s:HL('goDeclaration', 'flamingo')
+" struct, interface...
+call s:HL('goDeclType', 'ronchi')
+" # append, make, len...
+call s:HL('goBuiltins', 'tanhide')
+call s:HL('goParamName', 'portage')
+" function name
+call s:HL('goFunction', 'lime')
+" operators * = + :=
+call s:HL('goOperator', 'lightgravel')
+" types, string int64 float64
+call s:HL('goType', 'tacao')
+call s:HL('goSignedInts', 'tacao')
+call s:HL('goUnsignedInts', 'tacao')
+call s:HL('goFloats', 'tacao')
+call s:HL('goComplexes', 'tacao')
+call s:HL('goExtraType', 'tacao')
+call s:HL('goReceiverType', 'tacao')
+call s:HL('goTypeDecl', 'flamingo')
+call s:HL('goTypeName', 'tacao')
+" hi! link goDirective GruvboxAqua
+" hi! link goConstants GruvboxPurple
+" hi! link goDeclaration GruvboxRed
+" hi! link goDeclType GruvboxBlue
+" hi! link goBuiltins GruvboxOrange
 " }}}
 " HTML {{{
 
@@ -587,53 +695,83 @@ call s:HL('javaDocParam', 'dalespale', '', '')
 
 " JavaScript {{{
 "
+call s:HL('javascriptTSVariableBuiltin', 'snow', '', 'italic')
+call s:HL('javascriptTSProperty', 'plain', '', '')
+call s:HL('javascriptTSTagDelimiter', 'gravel', '', '')
+call s:HL('javascriptTSJsxProp', 'indiankhaki', '', 'none')
+call s:HL('javascriptTSJsxElement', 'taffy', '', 'none')
+call s:HL('javascriptTSJsxCloseElement', 'thistle', '', 'none')
+call s:HL('javascriptTSConstructor', 'lime', '', '')
+call s:HL('javascriptTSReturn', 'flamingo', '', '')
+call s:HL('javascriptTSDot', 'gravel')
+call s:HL('javascrtipTSJsxNameSpace', 'lime')
+call s:HL('jsdocTSKeyword', 'gravel')
+call s:HL('TSObjectPairKey', 'indiankhaki')
+call s:HL('javascriptTSJsxReactHook', 'monotaffy')
+
+" call s:HL('TSPropertyIdentifier', 'dress', '')
+" call s:HL('javascriptTSAttribute', 'saltwatertaffy', '')
+
+
+call s:HL('javascriptTSIdentifier', 'saltwatertaffy', '', 'none')
+call s:HL('javascriptTSFunction', 'ronchi', '', 'none')
+
 call s:HL('jsThis', 'snow', '', 'italic')
 call s:HL('jsStorageClass', 'tanhide')
-call s:HL('jsGlobalObjects', 'lime')
+call s:HL('jsGlobalObjects', 'indiankhaki')
 call s:HL('jsSuper', 'dress')
-call s:HL('jsDot', 'dress')
+call s:HL('jsDot', 'gravel')
 call s:HL('jsTemplateString', 'snow', '', 'italic')
 call s:HL('jsTemplateExpression', 'lightgravel')
 call s:HL('jsDecorator', 'mediumgravel')
 call s:HL('jsDecoratorFunction', 'gravel')
 
 call s:HL('jsClassProperty', 'taffy')
-call s:HL('jsClassDefinition', 'lime')
+call s:HL('jsClassDefinition', 'tuliptree')
+call s:HL('jsCatch', 'tuliptree')
+call s:HL('jsTry', 'tuliptree')
 
 " function(Map =>)
-" call s:HL('jsFuncArgs', 'dalespale')
-" call s:HL('jsArrowFuncArgs', 'dalespale')
-" call s:HL('jsArrowFunction', 'dalespale')
+call s:HL('jsFuncArgs', 'zinnwaldite')
+call s:HL('jsArrowFuncArgs', 'dress')
 
-call s:HL('jsClassFuncName', 'ronchi')
+call s:HL('jsClassFuncName', 'tuliptree', '', 'none')
 call s:HL('jsFuncName', 'ronchi')
 call s:HL('jsFuncCall', 'ronchi')
 call s:HL('jsObjectFuncName', 'taffy')
-call s:HL('jsxTag', 'taffy')
-
+call s:HL('jsObjectValue', 'plain')
+call s:HL('jsObjectProp', 'plain')
+call s:HL('javascriptTSArrow', 'dress')
+call s:HL('javascriptTSExport', 'tuliptree')
+"
+"
 call s:HL('jsFuncArgExpression', 'saltwatertaffy')
 call s:HL('jsArguments', 'saltwatertaffy')
-call s:HL('jsOperator', 'deco')
+call s:HL('jsOperator', 'gravel')
 
 call s:HL('jsClassKeyword', 'taffy')
-call s:HL('jsClassMethodType', 'lime')
-call s:HL('jsAsyncKeyword', 'lime')
+call s:HL('jsClassMethodType', 'taffy')
+call s:HL('jsAsyncKeyword', 'taffy')
 
-call s:HL('jsObjectKeyComputed', 'saltwatertaffy')
-call s:HL('jsNumber', 'tanhide')
-call s:HL('jsFloat', 'tanhide')
+call s:HL('jsObjectKeyComputed', 'lightgravel')
+call s:HL('jsBooleanTrue', 'tacao')
+call s:HL('jsBooleanFalse', 'tacao')
+call s:HL('jsNumber', 'tacao')
+call s:HL('jsFloat', 'tacao')
+
+" call s:HL('jsReturn', 'flamingo')
 
 " Flow Array<Type>
-call s:HL('jsFlowReturnGroup', 'deco')
-call s:HL('jsFlowType', 'deco')
-call s:HL('jsFlowObject', 'taffy')
+call s:HL('jsFlowReturnGroup', 'botticelli')
+call s:HL('jsFlowType', 'botticelli')
+call s:HL('jsFlowObject', 'botticelli')
 " Array<Type>
-call s:HL('jsFlowTypeCustom', 'lime')
-call s:HL('jsFlowTypeStatement', 'dress')
-call s:HL('jsFlowDefinition', 'deco')
-call s:HL('jsFlowClassGroup', 'deco')
+call s:HL('jsFlowTypeCustom', 'botticelli')
+call s:HL('jsFlowTypeStatement', 'botticelli')
+call s:HL('jsFlowDefinition', 'botticelli')
+call s:HL('jsFlowClassGroup', 'botticelli')
 " the class definition inside the main class
-call s:HL('jsFlowClassDef', 'deco')
+call s:HL('jsFlowClassDef', 'botticelli')
 
 "
 " call s:HL('jsFlowTypeValue', 'dress')
@@ -649,9 +787,11 @@ call s:HL('jsFlowReturnMaybe', 'lightgravel')
 " hi! link jsxOpenPunct Comment
 " hi! link jsxPunct Comment
 " hi! link jsxClosePunct Comment
-call s:HL('jsxCloseString', 'bubblegum')
+call s:HL('jsxCloseString', 'thistle')
 call s:HL('jsxPunct', 'gravel')
 call s:HL('jsxOpenPunct', 'gravel')
+call s:HL('jsxAttrib', 'indiankhaki')
+call s:HL('jsxTag', 'taffy')
 
 " }}}
 " LaTeX {{{
@@ -789,16 +929,69 @@ call s:HL('VimBracket', 'dress', '', 'none')
 
 " Ruby and Ruby on Rails {{{
 "
-call s:HL('rubyInterpolationDelimiter', 'saltwatertaffy', '', 'none')
+call s:HL('rubyInterpolationDelimiter', 'snow', '', 'none')
 call s:HL('rubyCurlyBlockDelimiter', 'gravel', '', 'none')
-call s:HL('rubyStringDelimiter', 'darkroast', '', 'none')
-call s:HL('rubyBoolean', 'dress', '', 'none')
-call s:HL('rubyLambdaOperator', 'saltwatertaffy', '', 'none')
-call s:HL('rubyProcOperator', 'saltwatertaffy', '', 'none')
-call s:HL('rubyArithmeticOperator', 'saltwatertaffy', '', 'none')
-call s:HL('rubyPercentStringDelimiter', 'deco', '', 'none')
+call s:HL('rubyStringDelimiter', 'tanhide', '', 'none')
+call s:HL('rubyBoolean', 'tacao', '', 'none')
+call s:HL('rubyLambdaOperator', 'springrain', '', 'none')
+call s:HL('rubyProcOperator', 'springrain', '', 'none')
+call s:HL('rubyArithmeticOperator', 'taffy', '', 'none')
+call s:HL('rubyPercentStringDelimiter', 'tanhide', '', 'none')
 call s:HL('rubyArrayDelimiter', 'gravel', '', 'none')
 call s:HL('rubyCurlyBlockDelimiter', 'gravel', '', 'none')
+call s:HL('rubyInstanceVariable', 'tacao', '', 'bold')
+call s:HL('rubyKeyword', 'taffy', '', 'none')
+call s:HL('rubyHelper', 'ronchi', '', 'none')
+
+call s:HL('rubySquareBracketEscape', 'gravel', '', 'none')
+call s:HL('rubyNestedSquareBrackets', 'gravel', '', 'none')
+call s:HL('rubyOperator', 'gravel', '', 'none')
+call s:HL('rubyPseudoOperator', 'plain', '', 'none')
+call s:HL('rubySuperClassOperator', 'tacao', '', 'none')
+call s:HL('rubyScopeOperator', 'plain', '', 'none')
+call s:HL('rubyBooleanOperator', 'taffy', '', 'none')
+call s:HL('rubyAssignmentOperator', 'lightgravel', '', 'none')
+call s:HL('rubyRangeOperator', 'taffy', '', 'none')
+call s:HL('rubySymbol', 'coffee', '', 'none')
+call s:HL('rspecMatchers', 'ronchi', '', 'none')
+
+call s:HL('rubyTSSymbol', 'coffee', '', 'none')
+call s:HL('rubyTSParameter', 'coffee', '', 'none')
+call s:HL('rubyTSInstanceVariable', 'tacao', '', '')
+call s:HL('rubyTSSorbetSignature', 'plain', '', '')
+call s:HL('rubyTSOperator', 'gravel', '', '')
+call s:HL('rubyTSFunction', 'ronchi', '', '')
+call s:HL('rubyTSDefine', 'lime', '', '')
+call s:HL('rubyTSKeyword', 'lime', '', '')
+call s:HL('rubyTSModuleName', 'taffy', '', '')
+call s:HL('rubyTSPunctBracket', 'gravel', '', 'none')
+call s:HL('rubyTSExtends', 'deco', '', 'none')
+call s:HL('rubyTSRubyEnd', 'taffy', '', 'none')
+call s:HL('rubyTSRubyReturn', 'taffy', '', 'none')
+call s:HL('rubyTSBlockParameterList', 'indiankhaki', '', 'none')
+call s:HL('rubyTSRSpecKeyword', 'taffy', '', 'none')
+call s:HL('rubyTSRspecGroupMethods', 'taffy', '', 'none')
+call s:HL('rubyTSRspecBeforeAndAfter', 'dalespale', '', 'none')
+call s:HL('rubyTSRspecKeyword', 'taffy', '', 'none')
+call s:HL('rubyTSRspecMatchers', 'dalespale', '', 'none')
+call s:HL('rubyTSRubyAccessor', 'deco', '', 'none')
+call s:HL('rubyTSPunctSpecial', 'tanhide', '', 'none')
+call s:HL('rubyTSPunctDelimiter', 'tanhide', '', 'none')
+call s:HL('rubyTSVariableBuiltin', 'toffee', '', 'none')
+call s:HL('TSRubyInclude', 'lime', '', 'none')
+call s:HL('TSRubyMethodEnd', 'taffy', '', 'none')
+
+" highlight! link rubyTSSymbol GreenBold
+" highlight! link rubyTSRubyMacro RedItalic
+" highlight! link rubyTSModuleName Purple
+" highlight! link rubyTSAttribute Yellow
+" highlight! link rubyTSBlockParameterList Blue
+" highlight! link rubyTSInstanceVariable Blue
+" highlight! link rubyTSParameter Blue
+" highlight! link rubyTSMacro RedItalic
+" highlight! link rubyTSSorbetSignature Normal
+" highlight! link rubyTSSorbetSignature Normal
+" highlight! link rubyTSExtends RedItalic
 
 " }}}
 
