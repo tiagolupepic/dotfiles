@@ -1,0 +1,10 @@
+use framework "Foundation"
+use script "BridgePlus"
+load framework
+use scripting additions
+
+set currentLayout to current application's SMSForder's currentKeyboardInputSourceID as text
+
+if currentLayout is not "com.apple.keylayout.US" then
+  set langSwitchResult to current application's SMSForder's changeInputSourceTo:"com.apple.keylayout.US"
+end if
