@@ -8,3 +8,4 @@ factories/
 *.md
 routes.rb
 *.gemspec
+*.scss
