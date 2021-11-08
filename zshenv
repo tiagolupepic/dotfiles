@@ -2,18 +2,21 @@ function fc-docker-compose() {
   docker-compose -f $FACTORIAL_PATH/docker-compose.yml --project-directory $FACTORIAL_PATH run --rm --label "traefik.enable=false" $*;
 }
 
-function fc-container() {
+function fc-back-container() {
   docker ps | grep 'factorial_back_run' | awk -F ' ' '{print $NF}'
 }
 
+function fc-front-container() {
+  docker ps | grep 'factorial_front_run' | awk -F ' ' '{print $NF}'
+}
+
 function fc-docker-exec() {
-  CONTAINER=$(fc-container)
+  CONTAINER=$(fc-back-container)
 
   if [ -n "$CONTAINER" ]; then
     docker exec -t -i $CONTAINER $*;
   else
     echo 'Container not found! Run the fc-docker-compose first!'
-    exit 1
   fi
 }
 
@@ -26,10 +29,10 @@ function fc-docker-sorbet() {
 }
 
 function fc-docker-command() {
-  CONTAINER=$(fc-container)
+  CONTAINER=$(fc-back-container)
 
   if [ -n "$CONTAINER" ]; then
-    docker exec $CONTAINER $*;
+    docker exec -i $CONTAINER $*;
   else
     echo 'Container not found! Run the fc-docker-compose first!'
     exit 1

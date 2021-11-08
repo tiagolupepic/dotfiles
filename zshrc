@@ -42,10 +42,16 @@ _load_settings "$HOME/.zsh/configs"
 
 alias dh='dirs -v'
 
-if [[ "$TERM" != "xterm-256color-italic" ]]; then
-    if tmux has-session -t 'hack' 2>/dev/null; then
-        tmux -u -2 attach-session -t 'hack'
-    else
-        tmux -u -2 new-session -s 'hack'
-    fi
-fi
+# if [[ "$TERM" != "xterm-256color-italic" ]]; then
+#     if tmux has-session -t 'hack' 2>/dev/null; then
+#         tmux -u -2 attach-session -t 'hack'
+#     else
+#         tmux -u -2 new-session -s 'hack'
+#     fi
+# fi
+
+eval "$(starship init zsh)"
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
