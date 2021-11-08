@@ -22,7 +22,17 @@ function! RubocopFixCs(path, vim_command)
       let l:command =  "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . l:rubocop
     endif
   endif
-  exec a:vim_command . l:command
+
+  if has('nvim')
+    let term_position = get(g:, 'test#neovim#term_position', 'botright')
+    execute term_position . ' new'
+    call termopen(l:command)
+    au BufDelete <buffer> wincmd p " switch back to last window
+    startinsert
+  else
+    exec a:vim_command . l:command
+  endif
+
 endfunction
 
 function! SorbetFixCurrentBuffer(path, vim_command)
@@ -39,8 +49,8 @@ function! SorbetFixCurrentBuffer(path, vim_command)
   exec a:vim_command . l:command
 endfunction
 
-function! EslintFix()
-  execute "AsyncRun ./node_modules/.bin/eslint --fix %"
+function! EslintFix(path)
+  execute "AsyncRun ./node_modules/.bin/eslint --fix " . a:path
 endfunction
 
 function! ClearEchoAndExecute(command)
@@ -86,6 +96,10 @@ function! Search(string) abort
   endtry
 endfunction
 
+function! RipGrep(string)
+  execute 'Rg' a:string
+endfunction
+
 " Run a given vim command on the results of alt from a given path.
 " See usage below.
 function! AltCommand(path, vim_command)
@@ -95,16 +109,6 @@ function! AltCommand(path, vim_command)
   else
     exec a:vim_command . " " . l:alternate
   endif
-endfunction
-
-function! OnFCSDelete()
-    if v:fcs_reason == 'deleted'
-        echohl Error
-        echo "File '" . expand('<afile>') . "' no longer available"
-        set modified
-    else
-        let v:fcs_choice = 'ask'
-    endif
 endfunction
 
 " Transform shell commands to use docker-compose if applicable
@@ -143,7 +147,9 @@ endfunction
 function! DeleteBuffer()
   let btarget = bufnr('%')
 
-  if &buftype ==# 'quickfix'
+  if &buftype ==# 'terminal'
+    execute 'bdelete! '.btarget
+  elseif &buftype ==# 'quickfix'
     let btotal = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
     if btotal == 1
       execute 'bdelete '.btarget
