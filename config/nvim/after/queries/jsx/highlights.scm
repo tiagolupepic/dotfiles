@@ -1,3 +1,5 @@
+;; extends
+
 (jsx_element
   open_tag: (jsx_opening_element
     attribute: (jsx_attribute
@@ -40,7 +42,7 @@
 ; Highlight React Hook usage
 (call_expression function: (identifier) @reactHook (#match? @reactHook "^use[A-Z]"))
 
-(class_declaration name: (identifier) @className)
+; (class_declaration name: (identifier) @className)
 
 ; Disable constants on import statements
 (import_statement (import_clause (identifier)) @none)

@@ -81,14 +81,30 @@ set sidescroll=8
 set listchars=tab:\|-,eol:¬
 set list
 
+set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set termguicolors
+
+" set complete=.,w,b,u
+" set iskeyword+=?
+" set iskeyword+=!
+
+set complete-=t
+set complete+=k
+set complete+=kspell
+set completeopt=menu,menuone,longest
+set complete=.,w,b,i,k,U,u,s
+
+
+if has('nvim')
+    set completeopt-=preview
+    let g:float_preview#docked=0
+endif
 
 let g:nvcode_termcolors=256
-let g:onedark_style = 'warmer'
 
-colorscheme melange
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme badwolf
 
 set foldcolumn=1
 " set updatetime=750
@@ -153,9 +169,11 @@ nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
 nnoremap <M-g> :Git<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
-let g:fugitive_pty = 0
+let g:fugitive_pty = 1
 
-nnoremap <C-p> :Files<CR>
+" nnoremap <C-p> :Files<CR>
+nnoremap <C-p> :lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
+
 
 " Expand to directory of current file - http://vimcasts.org/e/14
 cnoremap $$ <C-R>=expand('%:h').'/'<cr>
@@ -274,10 +292,10 @@ let g:rubycomplete_rails = 1
 
 augroup vimrc-ruby
   autocmd!
-  autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
+  " autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
-  autocmd BufNewFile,BufRead *_spec.rb set syntax=rspec
-  autocmd FileType ruby nnoremap <buffer> <leader>cs  :call RubocopFixCs(expand('%'), '!')<cr>
+  " autocmd BufNewFile,BufRead *_spec.rb set syntax=rspec
+  autocmd FileType ruby nnoremap <buffer> <leader>cr  :call RubocopFixCs(expand('%'), '!')<cr>
   autocmd FileType ruby nnoremap <buffer> <leader>cb  :call SorbetFixCurrentBuffer(expand('%'), '!')<cr>
 augroup END
 
@@ -307,6 +325,7 @@ let g:autotagTagsFile = ".tags"
 let g:autotagStartMethod = 'fork'
 
 let test#ruby#spec_framework = "rspec"
+let test#ruby#rspec#executable = 'bin/rspec'
 
 " CursorLine {{{
 set cursorline
@@ -348,3 +367,4 @@ au CursorHold,CursorHoldI * if getcmdwintype() == '' | checktime | endif
 
 " strip trailing witespaces
 autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.cjs,*.mjs :EslintFixAll

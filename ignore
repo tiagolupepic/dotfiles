@@ -2,3 +2,5 @@
 sorbet
 flow-typed
 node_modules
+__MACOSX
+.gem

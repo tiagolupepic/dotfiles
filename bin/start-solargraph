@@ -1,0 +1,4 @@
+#! /bin/zsh
+
+export APP_ROOT=/app
+docker exec -i $(fc-back-container) bundle exec solargraph stdio

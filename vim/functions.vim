@@ -2,18 +2,8 @@ function! GitLog()
   execute "!git log"
 endfunction
 
-function! DockerTestNearest()
-  let command = "docker-compose run --rm app bundle exec rspec " . expand('%:~:.') . ":" . line(".")
-  call ClearEchoAndExecute(command)
-endfunction
-
-function! DockerTestFile()
-  let command = "docker-compose run --rm app bundle exec rspec ". expand('%:~:.')
-  call ClearEchoAndExecute(command)
-endfunction
-
 function! RubocopFixCs(path, vim_command)
-  let l:rubocop = "bundle exec rubocop -a " . a:path
+  let l:rubocop = "bundle exec rubocop -A " . a:path
 
   if filereadable(".run_with_compose")
     if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
@@ -115,7 +105,7 @@ endfunction
 function! TransformCommandToUseDockerCompose(cmd) abort
   if filereadable(".run_with_compose")
     if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
-      return "fc-docker-exec " . a:cmd
+      return "fc-docker-exec-test-env " . a:cmd
     endif
 
     return "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd

@@ -48,7 +48,7 @@ require'lualine'.setup {
       -- },
       {
           'diagnostics',
-          sources = { 'nvim_lsp' },
+          sources = { 'nvim_diagnostic' },
           color_error = colors.red,
           color_warn = colors.yellow,
           color_info = colors.cyan,
@@ -96,18 +96,18 @@ let g:test#neovim#term_position = "botright 40"
 let g:test#strategy = "neovim"
 
 lua <<EOF
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.typescript.used_by = "javascript"
+-- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+-- ft_to_parser.someft = "javascript"
 
- require'nvim-treesitter.configs'.setup {
- context_commentstring = {
-  enable = true
- },
- ensure_installed =  "maintained" ,
- highlight = {
- enable = true,
- use_languagetree = true,
- custom_captures = {
+-- local parser_config = require "nvim-treesitter.parsers".filetype_to_parsername
+-- parser_config.typescript.used_by = "javascript"
+
+local ft_to_parser = require('nvim-treesitter.parsers').filetype_to_parsername
+ft_to_parser.rspec = 'ruby'
+-- ft_to_parser.ruby = 'ruby'
+
+
+ local custom_captures = {
    ["export"] = "TSExport",
    ["return"] = "TSReturn",
    ["debugger"] = "TSDebugger",
@@ -134,19 +134,93 @@ parser_config.typescript.used_by = "javascript"
    ["ruby.accessor"] = "TSRubyAccessor",
    ["ruby.entity"] = "TSRubyEntity",
    ["rspec.keyword"] = "TSRspecKeyword",
-   ["rspec.group.methods"] = "TSRspecGroupMethods",
+   ["rspec.test.macro"] = "TSRspecTestMacro",
    ["rspec.before.and.after"] = "TSRspecBeforeAndAfter",
    ["rspec.matchers"] = "TSRspecMatchers",
    ["ruby.method.end"] = "TSRubyMethodEnd",
    ["extends"] = "TSExtends",
    ["sorbet.signature"] = "TSSorbetSignature"
-   },
---  additional_vim_regex_highlighting = true,
+
+   }
+
+ require'nvim-treesitter.configs'.setup {
+ context_commentstring = {
+  enable = true
+ },
+endwise = {
+  enable = true,
+},
+    ensure_installed = {
+        "bash",
+        "css",
+        "graphql",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "lua",
+        "markdown",
+        "ruby",
+        "scss",
+        "toml",
+        "typescript",
+        "yaml",
+    },
+ highlight = {
+ enable = true,
+ use_languagetree = true,
+ custom_captures = custom_captures,
+ -- additional_vim_regex_highlighting = true,
  },
    indent = {
    enable = false,
-   }
+   },
+incremental_selection = {
+		enable = true,
+		keymaps = {
+			init_selection = "<CR>",
+			scope_incremental = "<CR>",
+			node_incremental = "<TAB>",
+			node_decremental = "<S-TAB>",
+		},
+	},
+	-- nvim-treesitter-textobjects
+	textobjects = {
+    move = {
+      enable = false,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+		select = {
+			enable = false,
+			lookahead = true,
+			keymaps = {
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				["ic"] = "@class.inner",
+			},
+		},
+	}
+
  }
+
+-- require"nvim-treesitter.highlight".set_custom_captures(custom_captures)
 
 EOF
 
@@ -233,7 +307,7 @@ local on_attach = function(client, bufnr)
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -252,14 +326,15 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', '<C-j>', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap("n", "<space>cs", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', '<C-j>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  buf_set_keymap("n", "<space>cs", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
+  -- buf_set_keymap("i", "<C-P>", "<cmd>lua vim.lsp.buf.completion()<CR>", opts)
 end
 
 require'lspconfig'.sorbet.setup{
-     cmd = { "bundle", "exec", "srb", "tc", "--lsp", "--enable-all-experimental-lsp-features", "--disable-watchman" },
+     cmd = { "start-sorbet" },
      filetypes = { "ruby" },
      on_attach = on_attach,
      handlers = {
@@ -283,24 +358,18 @@ lspconfig.flow.setup{
            underline = false
          }
        ),
+     },
+   trace = {
+     server = true
      }
 }
--- require'lspconfig'.eslint.setup{}
 
-local eslint = {
-  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-  lintStdin = true,
-  lintFormats = {"%f:%l:%c: %m"},
-  lintIgnoreExitCode = true,
-  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-  formatStdin = true
-}
-
-local efm_root_markers = { 'package.json', '.git/' }
-
-lspconfig.efm.setup{
-  root_dir = lspconfig.util.root_pattern(unpack(efm_root_markers)),
-  on_attach = on_attach,
+lspconfig.eslint.setup{
+  before_init = function(params)
+    params.processId = vim.NIL
+  end,
+  cmd = { "start-eslint" },
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   handlers = {
     ["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -313,28 +382,94 @@ lspconfig.efm.setup{
   init_options = {
     documentFormatting = true
   },
-  settings = {
-    rootMakers = efm_root_markers,
-    languages = {
-      javascript = {eslint},
-      javascriptreact = {eslint},
-      ["javascript.jsx"] = {eslint},
-      typescript = {eslint},
-      ["typescript.tsx"] = {eslint},
-      typescriptreact = {eslint}
+  on_new_config = function(config, new_root_dir)
+    config.settings.workspaceFolder = {
+      uri = new_root_dir,
+      name = vim.fn.fnamemodify(new_root_dir, ':t'),
     }
-  },
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescript.tsx",
-    "typescriptreact"
+  end,
+  -- root_dir = { "/app" },
+  -- root_dir = function(startpath)
+  --   return M.search_ancestors(startpath, matcher)
+  -- end,
+  settings = {
+   codeAction = {
+     disableRuleComment = {
+        enable = true,
+        location = "separateLine"
+      },
+      showDocumentation = {
+        enable = true
+      }
+   },
+    codeActionOnSave = {
+      enable = true,
+      mode = "all"
+    },
+    format = true,
+    nodePath = "",
+    onIgnoredFiles = "off",
+    packageManager = "npm",
+    quiet = false,
+    rulesCustomizations = {},
+    run = "onType",
+    useESLintClass = false,
+    validate = "on",
+    workingDirectory = {
+      mode = "auto"
+    }
   },
 }
 
+local eslint = {
+  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+  lintStdin = true,
+  lintFormats = {"%f:%l:%c: %m"},
+  lintIgnoreExitCode = true,
+  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+  formatStdin = true
+}
+
+-- local efm_root_markers = { 'package.json', '.git/' }
+
+-- lspconfig.efm.setup{
+--   root_dir = lspconfig.util.root_pattern(unpack(efm_root_markers)),
+--   on_attach = on_attach,
+--   handlers = {
+--     ["textDocument/publishDiagnostics"] = vim.lsp.with(
+--     vim.lsp.diagnostic.on_publish_diagnostics, {
+--       -- Disable virtual_text
+--       virtual_text = false,
+--       underline = false
+--       }
+--     ),
+--   },
+--   init_options = {
+--     documentFormatting = true
+--   },
+--   settings = {
+--     rootMakers = efm_root_markers,
+--     languages = {
+--       javascript = {eslint},
+--       javascriptreact = {eslint},
+--       ["javascript.jsx"] = {eslint},
+--       typescript = {eslint},
+--       ["typescript.tsx"] = {eslint},
+--       typescriptreact = {eslint}
+--     }
+--   },
+--   filetypes = {
+--     "javascript",
+--     "javascriptreact",
+--     "javascript.jsx",
+--     "typescript",
+--     "typescript.tsx",
+--     "typescriptreact"
+--   },
+-- }
+
 lspconfig.solargraph.setup{
+  cmd = { "start-solargraph" },
   filetypes = { "ruby" },
   on_attach = on_attach,
   handlers = {
@@ -347,6 +482,94 @@ lspconfig.solargraph.setup{
     ),
   },
 }
+
+local buf_map = function(bufnr, mode, lhs, rhs, opts)
+    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+        silent = true,
+    })
+end
+
+require'lspconfig'.tsserver.setup{
+  before_init = function(params)
+    params.processId = vim.NIL
+  end,
+   cmd = { "start-tsserver" },
+-- cmd = require'lspcontainers'.command('tsserver'),
+   on_attach = function(client, bufnr)
+        client.server_capabilities.document_formatting = true
+        client.server_capabilities.document_range_formatting = false
+
+        local ts_utils = require("nvim-lsp-ts-utils")
+        ts_utils.setup({})
+        ts_utils.setup_client(client)
+
+        buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+        buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
+        buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+
+        on_attach(client, bufnr)
+   end,
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      -- Disable virtual_text
+      virtual_text = false,
+      underline = false
+      }
+    ),
+  },
+}
+
+require'lspconfig'.syntax_tree.setup{
+  cmd = { "start-syntax-tree" },
+  filetypes = { "ruby" },
+  on_attach = on_attach,
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      -- Disable virtual_text
+      virtual_text = false,
+      underline = false
+      }
+    ),
+  },
+}
+
+local null_ls = require("null-ls")
+null_ls.setup({
+debug = true,
+    sources = {
+        -- null_ls.builtins.diagnostics.semgrep,
+        -- .with({
+        --     condition = with_root_file(".semgrep.yml"),
+        --   }),
+
+        -- null_ls.builtins.diagnostics.eslint_d,
+        -- null_ls.builtins.code_actions.eslint_d
+        -- null_ls.builtins.formatting.eslint_d
+    },
+    on_attach = function(client, bufnr)
+    if client.server_capabilities.documentFormattingProvider then
+      vim.cmd("nnoremap <silent><buffer> <leader>cs :lua vim.lsp.buf.format { async = true }<CR>")
+
+    --   -- format on save
+    --   vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.format { async = true }")
+    end
+
+    if client.server_capabilities.documentRangeFormattingProvider then
+      vim.cmd("xnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.range_formatting({})<CR>")
+    end
+    end,
+    handlers = {
+      ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        -- Disable virtual_text
+        virtual_text = false,
+        underline = false
+        }
+      ),
+    },
+})
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 vim.lsp.handlers.hover, {
@@ -366,44 +589,79 @@ vim.lsp.handlers.hover, {
 require'nvim-lastplace'.setup{}
 
 require('cokeline').setup({
-  hide_when_one_buffer = true,
-  cycle_prev_next_mappings = true,
-  buffers = {
-    filter = function(buffer) return buffer.type ~= 'quickfix' end,
+  show_if_buffers_are_at_least = 1,
+  mappings = {
+    cycle_prev_next = true
   },
+  buffers = {
+    filter_valid = function(buffer) return true end,
+  }
 })
 
 local actions = require "fzf-lua.actions"
 require'fzf-lua'.setup {
   winopts = {
-    height           = 0.25,         -- window height
+    height           = 0.40,         -- window height
     width            = 1.0,            -- window width
     row              = 0.9999,            -- window row position (0=top, 1=bottom)
     col              = 0.5,            -- window col position (0=left, 1=right)
+    preview = {
+      vertical = "up:60%",
+      horizontal = "right:40%",
+      layout = "vertical"
+      },
   },
   files = {
+    multiprocess = true,
     previewer = "builtin",
     git_icons = false,
     file_icons = true,
   },
-  preview = {
-    scrollbar = false,
-    -- vertical = "up:35%",
-    horizontal = "right:60%",
-    layout = "horizontal"
-
-  },
   previewers = {
     builtin = {
-      delay           = 100,          -- delay(ms) displaying the preview
+      delay           = 500,          -- delay(ms) displaying the preview
                                       -- prevents lag on fast scrolling
       syntax          = true,         -- preview syntax highlight?
       scrollbar = false,
-      layout = "horizontal",
-      horizontal = "right:45%",
+      layout = "vertical",
+      vertical = "up:60%",
+      horizontal = "right:35%",
       title = false
     },
-  }
+  },
+  fzf_opts = {
+    -- options are sent as `<left>=<right>`
+    -- set to `false` to remove a flag
+    -- set to '' for a non-value flag
+    -- for raw args use `fzf_args` instead
+    ['--ansi']        = '',
+    ['--info']        = 'inline',
+    ['--height']      = '100%',
+    ['--layout']      = 'reverse-list',
+    ['--border']      = 'none',
+  },
 }
 
+local prettier = require("prettier")
+
+prettier.setup({
+  ["null-ls"] = {
+    runtime_condition = function(params)
+      -- return false to skip running prettier
+      return true
+    end,
+  },
+  bin = 'prettierd',
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  },
+})
+
+-- vim.api.nvim_command [[autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby]]
+-- vim.api.nvim_command [[autocmd BufNewFile,BufRead *_spec.rb set syntax=rspec]]
+
 EOF
+

@@ -1,0 +1,6 @@
+#! /bin/zsh
+
+# docker exec --interactive --workdir=/app $(fc-front-container) vscode-eslint-language-server --stdio
+
+TERM=xterm-256color
+fc-docker-compose eslint

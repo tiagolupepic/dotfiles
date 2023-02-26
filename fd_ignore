@@ -9,3 +9,4 @@ factories/
 routes.rb
 *.gemspec
 *.scss
+__MACOSX

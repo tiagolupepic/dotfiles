@@ -1,4 +1,6 @@
 [user]
   name = Tiago Lupepic
-  email = tiago@factorial.co
+  email = tiago.lupepic@factorial.co
 
+[core]
+  excludesfile = /Users/tiago/.gitignore-factorial

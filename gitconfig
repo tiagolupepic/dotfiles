@@ -2,13 +2,13 @@
 	name = Tiago Lupepic
 	email = tiagolpc@gmail.com
 
-[includeIf "gitdir:~/Projects/factorial"]
-  path = ~/.gitconfig-factorial
-
 [core]
   excludesfile = /Users/tiago/.gitignore
 	ignorecase = false
   editor = nvim
+
+[includeIf "gitdir:~/Projects/factorial"]
+  path = ~/.gitconfig-factorial
 
 [color]
   status = auto

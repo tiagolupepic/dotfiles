@@ -1,9 +1,9 @@
 function fc-docker-compose() {
-  docker-compose -f $FACTORIAL_PATH/docker-compose.yml --project-directory $FACTORIAL_PATH run --rm --label "traefik.enable=false" $*;
+  docker-compose -f $FACTORIAL_PATH/docker-compose.local.yml --project-directory $FACTORIAL_PATH run --rm --label "traefik.enable=false" $*;
 }
 
 function fc-back-container() {
-  docker ps | grep 'factorial_back_run' | awk -F ' ' '{print $NF}'
+  docker ps | grep 'factorial_back-console_run' | awk -F ' ' '{print $NF}'
 }
 
 function fc-front-container() {
@@ -15,6 +15,18 @@ function fc-docker-exec() {
 
   if [ -n "$CONTAINER" ]; then
     docker exec -t -i $CONTAINER $*;
+  else
+    echo 'Container not found! Run the fc-docker-compose first!'
+  fi
+}
+
+function fc-docker-exec-test-env() {
+  CONTAINER=$(fc-back-container)
+
+  ENV_TEST="${FACTORIAL_PATH}/.env.test.local"
+
+  if [ -n "$CONTAINER" ]; then
+    docker exec --env-file $ENV_TEST -t -i $CONTAINER $*;
   else
     echo 'Container not found! Run the fc-docker-compose first!'
   fi
@@ -40,5 +52,5 @@ function fc-docker-command() {
 }
 
 function fc-docker-run-pry() {
-  docker-compose -f $FACTORIAL_PATH/docker-compose.yml --project-directory $FACTORIAL_PATH  run --rm --service-ports --name factorial_back_pry back
+  docker-compose -f $FACTORIAL_PATH/docker-compose.local.yml --project-directory $FACTORIAL_PATH  run --rm --service-ports --name factorial_back_pry back
 }

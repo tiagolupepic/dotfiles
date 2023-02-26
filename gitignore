@@ -20,6 +20,18 @@ db/sphinx/*
 .tm_properties
 .run_with_compose
 
+docker-compose.local.yml
+.env
+.env.test
+.env.test.local
+entrypoint.sh
+mutagen.yml
+mutagen.yml.lock
+Dockerfile.mysql
+Dockerfile.eslint
+playground
+
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
