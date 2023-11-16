@@ -1,4 +1,5 @@
 #! /bin/zsh
 
 export APP_ROOT=/app
-docker exec -i -e GEM_PATH=/vendor/bundle/ruby/2.7.0 $(fc-back-container) /vendor/bundle/ruby/2.7.0/bin/stree lsp
+# docker exec -i -e GEM_PATH=/vendor/bundle/ruby/2.7.0 $(fc-back-container) /vendor/bundle/ruby/2.7.0/bin/stree lsp
+docker exec -i $(fc-back-container) bundle exec stree lsp

@@ -1,8 +1,8 @@
 #! /bin/zsh
 
-# docker exec --interactive --workdir=/app $(fc-front-container) typescript-language-server --stdio
+TERM=xterm-256color
+# docker exec --interactive --workdir=/workspace/frontend $(fc-front-container) typescript-language-server --stdio
 
 # docker container run --interactive --volume front-code:/Users/tiago/Projects/factorial/frontend --workdir=/Users/tiago/Projects/factorial/frontend docker.io/lspcontainers/typescript-language-server
 
-TERM=xterm-256color
 fc-docker-compose tsserver

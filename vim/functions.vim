@@ -66,16 +66,6 @@ function! ClearEchoAndExecute(command)
   execute command
 endfunction
 
-function! SearchForDeclarationCursor()
-  let searchTerm = expand("<cword>")
-  call SearchForDeclaration(searchTerm)
-endfunction
-
-function! SearchForDeclaration(term)
-  let definition = 'def ' . a:term
-  cexpr system('ag -w ' . shellescape(definition))
-endfunction
-
 function! Search(string) abort
   let saved_shellpipe = &shellpipe
   let &shellpipe = '>'
@@ -105,7 +95,7 @@ endfunction
 function! TransformCommandToUseDockerCompose(cmd) abort
   if filereadable(".run_with_compose")
     if getcwd() =~# '^\' . expand('$FACTORIAL_PATH')
-      return "fc-docker-exec-test-env " . a:cmd
+      return "fc-docker-exec " . a:cmd
     endif
 
     return "docker-compose run --rm " . fnamemodify(getcwd(), ':t') . " " . a:cmd

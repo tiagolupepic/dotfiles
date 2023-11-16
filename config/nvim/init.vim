@@ -102,10 +102,11 @@ lua <<EOF
 -- local parser_config = require "nvim-treesitter.parsers".filetype_to_parsername
 -- parser_config.typescript.used_by = "javascript"
 
-local ft_to_parser = require('nvim-treesitter.parsers').filetype_to_parsername
-ft_to_parser.rspec = 'ruby'
+-- local ft_to_parser = require('nvim-treesitter.parsers').filetype_to_parsername
+-- ft_to_parser.rspec = 'ruby'
 -- ft_to_parser.ruby = 'ruby'
 
+vim.treesitter.language.register('ruby', 'rspec')
 
  local custom_captures = {
    ["export"] = "TSExport",
@@ -151,6 +152,10 @@ endwise = {
   enable = true,
 },
     ensure_installed = {
+        "c",
+        "vim",
+        "lua",
+        "help",
         "bash",
         "css",
         "graphql",
@@ -164,6 +169,7 @@ endwise = {
         "scss",
         "toml",
         "typescript",
+        "tsx",
         "yaml",
     },
  highlight = {
@@ -421,14 +427,14 @@ lspconfig.eslint.setup{
   },
 }
 
-local eslint = {
-  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-  lintStdin = true,
-  lintFormats = {"%f:%l:%c: %m"},
-  lintIgnoreExitCode = true,
-  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-  formatStdin = true
-}
+-- local eslint = {
+--   lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+--   lintStdin = true,
+--   lintFormats = {"%f:%l:%c: %m"},
+--   lintIgnoreExitCode = true,
+--   formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+--   formatStdin = true
+-- }
 
 -- local efm_root_markers = { 'package.json', '.git/' }
 
@@ -494,10 +500,10 @@ require'lspconfig'.tsserver.setup{
     params.processId = vim.NIL
   end,
    cmd = { "start-tsserver" },
--- cmd = require'lspcontainers'.command('tsserver'),
    on_attach = function(client, bufnr)
         client.server_capabilities.document_formatting = true
         client.server_capabilities.document_range_formatting = false
+        client.server_capabilities.semanticTokensProvider = null
 
         local ts_utils = require("nvim-lsp-ts-utils")
         ts_utils.setup({})
@@ -536,8 +542,9 @@ require'lspconfig'.syntax_tree.setup{
 }
 
 local null_ls = require("null-ls")
+
 null_ls.setup({
-debug = true,
+    debug = true,
     sources = {
         -- null_ls.builtins.diagnostics.semgrep,
         -- .with({
@@ -569,6 +576,35 @@ debug = true,
         }
       ),
     },
+})
+
+local helpers = require("null-ls.helpers")
+local u = require("null-ls.utils")
+
+null_ls.register({
+    method = null_ls.methods.FORMATTING,
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    generator = helpers.formatter_factory({
+        command = "start-prettier",
+        args = {
+          "$FILENAME",
+          "$ROOT",
+        },
+        to_stdin = true,
+        check_exit_code = function(code)
+            if code ~= 0 then
+                vim.schedule(function()
+                    vim.notify(
+                        "Failed to run formatter. Is Docker container running?",
+                        vim.log.levels.ERROR
+                    )
+                end)
+                return false
+            else
+                return true
+            end
+        end,
+    }),
 })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -642,26 +678,28 @@ require'fzf-lua'.setup {
   },
 }
 
-local prettier = require("prettier")
+local neogit = require('neogit')
+neogit.setup {}
 
-prettier.setup({
-  ["null-ls"] = {
-    runtime_condition = function(params)
-      -- return false to skip running prettier
-      return true
-    end,
-  },
-  bin = 'prettierd',
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  },
-})
+-- local prettier = require("prettier")
 
--- vim.api.nvim_command [[autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby]]
--- vim.api.nvim_command [[autocmd BufNewFile,BufRead *_spec.rb set syntax=rspec]]
+-- prettier.setup({
+--   ["null-ls"] = {
+--     runtime_condition = function(params)
+--       -- return false to skip running prettier
+--       return true
+--     end,
+--   },
+--   bin = 'prettier',
+--   filetypes = {
+--     "javascript",
+--     "javascriptreact",
+--     "typescript",
+--     "typescriptreact"
+--   },
+-- })
+
+-- require("hardtime").setup()
 
 EOF
 

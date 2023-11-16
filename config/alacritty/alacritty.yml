@@ -11,12 +11,11 @@ window:
     columns: 288
     lines: 81
 shell:
-  program: /usr/local/bin/zsh
-  args:
-     - -l
-     - -c
-     - tmux attach || tmux -u -2 new-session -s 'hack'
-alt_send_esc: true
+  program: /opt/homebrew/bin/zsh
+  # args:
+    # - -l
+    # - -c
+    # - /opt/homebrew/bin/tmux attach || /opt/homebrew/bin/tmux -u -2 new-session -s 'hack'
 live_config_reload: true
 font:
   size: 12

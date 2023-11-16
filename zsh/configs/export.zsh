@@ -21,11 +21,11 @@ export CPPFLAGS="-I/usr/local/opt/node@16/include"
 export GOPATH=$HOME/.golang
 
 export FZF_DEFAULT_COMMAND='ag -p ~/.ignore --hidden -g ""'
-export FACTORIAL_PATH="$HOME/Projects/factorial"
+export FACTORIAL_PATH="/Volumes/Factorial/"
 export PRETTIER_RUBY_TIMEOUT_MS=30000
 export PRETTIERD_LOCAL_PRETTIER_ONLY=false
 
 # export FZF_DEFAULT_COMMAND='fd --type f -H -I -E node_modules -E .git -E "*/tmp/cache" -E tmp/cache'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-eval "$(rbenv init -)"
+export ANDROID_HOME=/Users/tiago/Library/Android/sdk

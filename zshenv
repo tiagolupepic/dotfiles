@@ -3,15 +3,25 @@ function fc-docker-compose() {
 }
 
 function fc-back-container() {
-  docker ps | grep 'factorial_back-console_run' | awk -F ' ' '{print $NF}'
+  docker ps | grep 'factorial-back-console-run' | awk -F ' ' '{print $NF}'
 }
 
 function fc-front-container() {
-  docker ps | grep 'factorial_front_run' | awk -F ' ' '{print $NF}'
+  docker ps | grep 'factorial-front-run' | awk -F ' ' '{print $NF}'
 }
 
 function fc-docker-exec() {
   CONTAINER=$(fc-back-container)
+
+  if [ -n "$CONTAINER" ]; then
+    docker exec -t -i $CONTAINER $*;
+  else
+    echo 'Container not found! Run the fc-docker-compose first!'
+  fi
+}
+
+function fc-docker-front-exec() {
+  CONTAINER=$(fc-front-container)
 
   if [ -n "$CONTAINER" ]; then
     docker exec -t -i $CONTAINER $*;

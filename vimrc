@@ -47,12 +47,13 @@ set autoread
 set autowrite
 
 syntax on
+set re=0
+
 " syntax sync fromstart
 " syntax sync minlines=256
-
-set synmaxcol=9999
-set lazyredraw
-set regexpengine=1
+" set synmaxcol=9999
+" set lazyredraw
+" set regexpengine=1
 
 set cmdheight=1
 set numberwidth=4
@@ -97,8 +98,9 @@ set complete=.,w,b,i,k,U,u,s
 
 
 if has('nvim')
-    set completeopt-=preview
-    let g:float_preview#docked=0
+  set diffopt+=linematch:50
+  set completeopt-=preview
+  let g:float_preview#docked=0
 endif
 
 let g:nvcode_termcolors=256
@@ -161,19 +163,16 @@ nnoremap <leader>A :Rg<space>
 " Search with ripgrep the word under the cursor
 nnoremap \\ :Rg <c-r><c-w><cr>
 
-map <leader>cd :call SearchForDeclarationCursor()<CR>
-
 nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
 
-" git fugitive
-nnoremap <M-g> :Git<CR>
+nnoremap <M-g> :Neogit<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
-let g:fugitive_pty = 1
+
+" let g:fugitive_pty = 1
 
 " nnoremap <C-p> :Files<CR>
 nnoremap <C-p> :lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
-
 
 " Expand to directory of current file - http://vimcasts.org/e/14
 cnoremap $$ <C-R>=expand('%:h').'/'<cr>
@@ -239,19 +238,22 @@ nmap <silent> gB <plug>(cokeline-focus-prev)
 nnoremap <silent> <leader>bq :call DeleteBuffer()<CR>
 
 " nnoremap <leader>lb <cmd>Telescope buffers<cr>
-nnoremap <silent> <leader>lb :Buffers<CR>
+" nnoremap <silent> <leader>lb :Buffers<CR>
+nnoremap <silent> <leader>lb :lua require('fzf-lua').buffers({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
 
 " list git files"
 " nnoremap <leader>lg <cmd>Telescope git_status<cr>
 
-nnoremap <leader>lg :GFiles?<cr>
+" nnoremap <leader>lg :GFiles?<cr>
+nnoremap <leader>lg :lua require('fzf-lua').git_status({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
 nnoremap <leader>gd :SignifyHunkDiff<cr>
 nmap <leader>gj <plug>(signify-next-hunk)
 nmap <leader>gk <plug>(signify-prev-hunk)
 
 " list tags
 " nnoremap <silent> <leader>lt <cmd>Telescope tags<CR>
-nnoremap <silent> <leader>lt :Tags<CR>
+" nnoremap <silent> <leader>lt :Tags<CR>
+nnoremap <silent> <leader>lt :lua require('fzf-lua').tags({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
 
 " delete and dont replace the buffer
 nnoremap <leader>d "_d
@@ -326,6 +328,7 @@ let g:autotagStartMethod = 'fork'
 
 let test#ruby#spec_framework = "rspec"
 let test#ruby#rspec#executable = 'bin/rspec'
+let test#javascript#jest#executable = "NODE_ENV=test pnpm jest"
 
 " CursorLine {{{
 set cursorline

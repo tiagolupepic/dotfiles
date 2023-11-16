@@ -29,6 +29,8 @@ mutagen.yml
 mutagen.yml.lock
 Dockerfile.mysql
 Dockerfile.eslint
+Dockerfile.tsserver
+Dockerfile.frontend
 playground
 
 
@@ -58,3 +60,8 @@ Thumbs.db
 .rbenv-version
 tags
 .tags
+
+.Spotlight-V100
+.Trashes
+.fseventsd
+.ignore

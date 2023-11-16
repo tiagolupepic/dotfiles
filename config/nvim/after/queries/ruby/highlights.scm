@@ -20,7 +20,8 @@
 
 (if ["end"] @conditional)
 
-; (method ["end"] @ruby.method.end)
+(method ["end"] @ruby.method.end)
+(method ["def"] @ruby.method.def)
 
 [
 "return"

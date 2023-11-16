@@ -19,13 +19,13 @@
  (#match? @jsx.element "^[A-Z]")))
 
 ; Handle the dot operator effectively - <My.Component>
-(jsx_opening_element ((nested_identifier (identifier) @jsx.element (identifier) @jsx.close.element)))
+; (jsx_opening_element ((nested_identifier (identifier) @jsx.element (identifier) @jsx.close.element)))
 
 ; Handle the dot operator effectively - </My.Component>
-(jsx_closing_element ((nested_identifier (identifier) @jsx.close.element (identifier) @jsx.close.element)))
+; (jsx_closing_element ((nested_identifier (identifier) @jsx.close.element (identifier) @jsx.close.element)))
 
 ; Handle the dot operator effectively - <My.Component />
-(jsx_self_closing_element ((nested_identifier (identifier) @jsx.element (identifier) @jsx.element)))
+; (jsx_self_closing_element ((nested_identifier (identifier) @jsx.element (identifier) @jsx.element)))
 
 ; import/require keywords and names
 ((identifier) @namespace (#eq? @namespace "require"))
