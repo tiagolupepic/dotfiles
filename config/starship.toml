@@ -18,6 +18,8 @@ format = """\
           $character\
           """
 
+command_timeout = 1000
+
 [package]
 disabled = true
 

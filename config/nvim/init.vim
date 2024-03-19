@@ -4,7 +4,10 @@ source ~/.vimrc
 
 autocmd TermOpen * :set nonumber norelativenumber
 
+lua require('plugins')
+
 lua <<EOF
+
 local colors = {
   bg = '#202328',
   fg = '#bbc2cf',
@@ -145,9 +148,6 @@ vim.treesitter.language.register('ruby', 'rspec')
    }
 
  require'nvim-treesitter.configs'.setup {
- context_commentstring = {
-  enable = true
- },
 endwise = {
   enable = true,
 },
@@ -155,7 +155,6 @@ endwise = {
         "c",
         "vim",
         "lua",
-        "help",
         "bash",
         "css",
         "graphql",
@@ -169,6 +168,7 @@ endwise = {
         "scss",
         "toml",
         "typescript",
+        "commonlisp",
         "tsx",
         "yaml",
     },
@@ -225,6 +225,10 @@ incremental_selection = {
 	}
 
  }
+
+require('ts_context_commentstring').setup {}
+vim.g.skip_ts_context_commentstring_module = true
+
 
 -- require"nvim-treesitter.highlight".set_custom_captures(custom_captures)
 
@@ -630,7 +634,9 @@ require('cokeline').setup({
     cycle_prev_next = true
   },
   buffers = {
-    filter_valid = function(buffer) return true end,
+    filter_valid = function(buffer)
+        return buffer.type ~= "terminal" and buffer.type ~= "quickfix"
+    end,
   }
 })
 
@@ -700,6 +706,16 @@ neogit.setup {}
 -- })
 
 -- require("hardtime").setup()
+require('pqf').setup()
+
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
 EOF
 

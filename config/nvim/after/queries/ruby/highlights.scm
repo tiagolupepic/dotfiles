@@ -51,7 +51,7 @@
 
 ; (call receiver: (constant) @Rspec block: (_) (#match? @Rspec "^(RSpec)$"))
 
-(call receiver: (constant) @rspec (#match? @rspec "^(RSpec)$") (set! "definition.var.scope" "local"))
+; (call receiver: (constant) @rspec (#match? @rspec "^(RSpec)$") (set! "definition.var.scope" "local"))
 
 (call block: (do_block ["do" "end"] @rspec.keyword))
 

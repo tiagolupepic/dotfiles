@@ -1021,6 +1021,8 @@ call s:HL('@none.ruby', 'plain', 'newblackgravel')
 call s:HL('@ruby.include.ruby', 'lime', '', 'none')
 call s:HL('@ruby.method.end.ruby', 'taffy', '', 'none')
 call s:HL('@ruby.method.def.ruby', 'lime', '', 'none')
+call s:HL('@string.special.symbol.ruby', 'coffee', '', 'none')
+
 
 " highlight! link rubyTSSymbol GreenBold
 " highlight! link rubyTSRubyMacro RedItalic

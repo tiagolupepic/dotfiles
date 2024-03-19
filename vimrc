@@ -1,4 +1,3 @@
-source ~/.vim/plugins.vim
 source ~/.vim/functions.vim
 
 let mapleader=" "
@@ -158,18 +157,16 @@ nnoremap <leader>s :%s//<left>
 nnoremap <silent> <leader>F :nohlsearch<CR>
 
 " Search with ripgrep the word under the cursor
-nnoremap <M-a> :Rg<space>
-nnoremap <leader>A :Rg<space>
+nnoremap <leader>A :lua require('fzf-lua').grep({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
+
 " Search with ripgrep the word under the cursor
-nnoremap \\ :Rg <c-r><c-w><cr>
+nnoremap \\ :lua require('fzf-lua').grep_cword({ fzf_opts = {['--layout'] = 'reverse-list'} })<cr>
 
 nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
 
 nnoremap <M-g> :Neogit<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
-
-" let g:fugitive_pty = 1
 
 " nnoremap <C-p> :Files<CR>
 nnoremap <C-p> :lua require('fzf-lua').files({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
@@ -186,33 +183,6 @@ cnoremap %% <C-R>=expand('%:t')<cr>
 " :echo expand('%:p:h')   /abc/def          directory containing file ('head')
 cnoremap %$ <C-R>=expand('%:p:h').'/'<cr>
 
-" let g:fzf_layout = { 'down': '~65%' }
-let g:fzf_preview_window = ['up:60%']
-
-let g:fzf_layout = { 'up': '60%', 'window': { 'width': 1, 'height': 0.4, 'yoffset': 1, 'border': 'rounded' } }
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
-
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --colors "path:fg:170,170,170" --colors "match:fg:246,63,81" --colors "line:fg:246,63,81" --smart-case '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview({ 'options': '--color hl:123,hl+:222 --preview-window up:60%' }), <bang>0)
-
-let g:fzf_buffers_jump = 1
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
 " escape alias
 inoremap jj <esc>
 inoremap jJ <esc>
@@ -227,7 +197,7 @@ nnoremap <c-w>t :tabnew<cr>
 " map keys
 nnoremap <silent> <leader>t :w<BAR>:TestFile<CR>
 nnoremap <silent> <leader>T :w<BAR>:TestNearest<CR>
-nnoremap <silent> <leader>a :TestSuite<CR>
+" nnoremap <silent> <leader>a :TestSuite<CR>
 " nnoremap <silent> <leader>g :TestVisit<CR>
 
 nmap <silent> <leader>o :<c-u>call append(line("."),  repeat([""], v:count1))<cr>
@@ -237,8 +207,6 @@ nmap <silent> gb <plug>(cokeline-focus-next)
 nmap <silent> gB <plug>(cokeline-focus-prev)
 nnoremap <silent> <leader>bq :call DeleteBuffer()<CR>
 
-" nnoremap <leader>lb <cmd>Telescope buffers<cr>
-" nnoremap <silent> <leader>lb :Buffers<CR>
 nnoremap <silent> <leader>lb :lua require('fzf-lua').buffers({ fzf_opts = {['--layout'] = 'reverse-list'} })<CR>
 
 " list git files"
