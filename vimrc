@@ -164,7 +164,8 @@ nnoremap \\ :lua require('fzf-lua').grep_cword({ fzf_opts = {['--layout'] = 'rev
 
 nnoremap <leader>. :w<cr>:call AltCommand(expand('%'), ':e')<cr>
 
-nnoremap <M-g> :Neogit<CR>
+nnoremap <M-g> :Fugit2<CR>
+" nnoremap <M-g> :lua require("tinygit").interactiveStaging()<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
 

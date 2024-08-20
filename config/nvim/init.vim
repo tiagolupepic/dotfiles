@@ -158,6 +158,7 @@ endwise = {
         "bash",
         "css",
         "graphql",
+        "gitcommit",
         "html",
         "javascript",
         "jsdoc",
@@ -343,6 +344,11 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap("i", "<C-P>", "<cmd>lua vim.lsp.buf.completion()<CR>", opts)
 end
 
+vim.diagnostic.config({
+  virtual_text = false,
+  underline = false
+})
+
 require'lspconfig'.sorbet.setup{
      cmd = { "start-sorbet" },
      filetypes = { "ruby" },
@@ -358,7 +364,15 @@ require'lspconfig'.sorbet.setup{
      },
 }
 
-lspconfig.flow.setup{
+require'lspconfig'.ruby_lsp.setup{
+     cmd = { "start-ruby-lsp" },
+     filetypes = { "ruby" },
+     on_init = function(client, initialization_result)
+       if client.server_capabilities then
+        -- client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.semanticTokensProvider = false  -- turn off semantic tokens
+       end
+     end,
      on_attach = on_attach,
      handlers = {
        ["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -369,10 +383,23 @@ lspconfig.flow.setup{
          }
        ),
      },
-   trace = {
-     server = true
-     }
 }
+
+-- lspconfig.flow.setup{
+--      on_attach = on_attach,
+--      handlers = {
+--        ["textDocument/publishDiagnostics"] = vim.lsp.with(
+--          vim.lsp.diagnostic.on_publish_diagnostics, {
+--            -- Disable virtual_text
+--            virtual_text = false,
+--            underline = false
+--          }
+--        ),
+--      },
+--    trace = {
+--      server = true
+--      }
+-- }
 
 lspconfig.eslint.setup{
   before_init = function(params)
@@ -478,20 +505,20 @@ lspconfig.eslint.setup{
 --   },
 -- }
 
-lspconfig.solargraph.setup{
-  cmd = { "start-solargraph" },
-  filetypes = { "ruby" },
-  on_attach = on_attach,
-  handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- Disable virtual_text
-      virtual_text = false,
-      underline = false
-      }
-    ),
-  },
-}
+-- lspconfig.solargraph.setup{
+--   cmd = { "start-solargraph" },
+--   filetypes = { "ruby" },
+--   on_attach = on_attach,
+--   handlers = {
+--     ["textDocument/publishDiagnostics"] = vim.lsp.with(
+--     vim.lsp.diagnostic.on_publish_diagnostics, {
+--       -- Disable virtual_text
+--       virtual_text = false,
+--       underline = false
+--       }
+--     ),
+--   },
+-- }
 
 local buf_map = function(bufnr, mode, lhs, rhs, opts)
     vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
@@ -504,11 +531,15 @@ require'lspconfig'.tsserver.setup{
     params.processId = vim.NIL
   end,
    cmd = { "start-tsserver" },
-   on_attach = function(client, bufnr)
+     on_init = function(client, initialization_result)
+       if client.server_capabilities then
+        -- client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.document_formatting = true
         client.server_capabilities.document_range_formatting = false
-        client.server_capabilities.semanticTokensProvider = null
-
+        client.server_capabilities.semanticTokensProvider = false
+       end
+     end,
+   on_attach = function(client, bufnr)
         local ts_utils = require("nvim-lsp-ts-utils")
         ts_utils.setup({})
         ts_utils.setup_client(client)
@@ -684,8 +715,25 @@ require'fzf-lua'.setup {
   },
 }
 
-local neogit = require('neogit')
-neogit.setup {}
+vim.g.lazygit_floating_window_winblend = 1 -- transparency of floating window
+vim.g.lazygit_floating_window_scaling_factor = 0.9 -- scaling factor for floating window
+vim.g.lazygit_floating_window_use_plenary = 1 -- use plenary.nvim to manage floating window if available
+
+-- require('vgit').setup()
+
+-- local neogit = require('neogit')
+
+-- neogit.setup {
+--    filewatcher = { enabled = true },
+--    integrations = {
+--      fzf_lua = true,
+--      diffview = true,
+--    },
+--    -- auto_show_console = false,
+--    -- popup = {
+--    --  kind = "split",
+--   -- }
+-- }
 
 -- local prettier = require("prettier")
 
@@ -706,7 +754,14 @@ neogit.setup {}
 -- })
 
 -- require("hardtime").setup()
-require('pqf').setup()
+-- require('pqf').setup()
+
+require('fugit2').setup({
+  opts = {
+    width = 150,
+    external_diffview = false, -- tell fugit2 to use diffview.nvim instead of builtin implementation.
+  }
+})
 
 local harpoon = require("harpoon")
 

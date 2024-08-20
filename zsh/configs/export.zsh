@@ -5,7 +5,7 @@ export PATH="/usr/local/opt/qt/bin:$PATH"
 export PATH="/usr/local/opt/python@3.9/bin:$HOME/.cargo/bin:$PATH"
 export PATH="/usr/local/opt/qt@5/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$GOPATH/bin:$PATH"
-export PATH="/usr/local/opt/node@16/bin:$PATH"
+export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
 
 export LDFLAGS="-L/usr/local/opt/python@3.8/lib"
 export LDFLAGS="-L/usr/local/opt/qt@5/lib"
@@ -15,8 +15,8 @@ export CPPFLAGS="-I/usr/local/opt/qt@5/include"
 export PKG_CONFIG_PATH="/usr/local/opt/python@3.9/lib/pkgconfig"
 export PKG_CONFIG_PATH="/usr/local/opt/qt@5/lib/pkgconfig"
 
-export LDFLAGS="-L/usr/local/opt/node@16/lib"
-export CPPFLAGS="-I/usr/local/opt/node@16/include"
+export LDFLAGS="-L/opt/homebrew/opt/node@16/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/node@16/include"
 
 export GOPATH=$HOME/.golang
 

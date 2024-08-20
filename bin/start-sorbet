@@ -1,3 +1,4 @@
 #! /bin/zsh
 
 docker exec -i $(fc-back-container) bundle exec srb tc --lsp --enable-all-experimental-lsp-features --disable-watchman
+# docker exec -i $(fc-back-container) bundle exec srb tc --lsp --disable-watchman

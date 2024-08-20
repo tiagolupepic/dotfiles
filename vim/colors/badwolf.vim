@@ -277,10 +277,12 @@ call s:HL('CursorLine',   '', 'darkgravel', 'none')
 call s:HL('CursorLineNr',   'dalespale', s:gutter, 'none')
 call s:HL('CursorColumn', '', 'darkgravel')
 call s:HL('ColorColumn',  '', s:gutter)
+call s:HL('QuickFixLine',   '', 'darkgravel', 'none')
+call s:HL('Delimiter', 'plain', 'newblackestgravel')
 
-call s:HL('TabLine', 'tablinebg', 'tablinebg', 'none')
+call s:HL('TabLine', 'plain', 'darkgravel', 'none')
 call s:HL('TabLineFill', 'tablinefg', 'tablinebg', 'none')
-call s:HL('TabLineSel', 'blackestgravel', 'statuslinebg', 'bold')
+call s:HL('TabLineSel', 'blackestgravel', 'plain', 'bold')
 
 call s:HL('MatchParen', 'dalespale', 'newblackgravel', 'bold')
 

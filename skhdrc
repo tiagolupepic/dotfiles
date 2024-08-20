@@ -1,5 +1,5 @@
 # ope terminal
-cmd - return : open -n -a Alacritty.app
+# cmd - return : open -n -a Alacritty.app
 
 # moves focus between windows in the current focused display
 alt - h : yabai -m window --focus west

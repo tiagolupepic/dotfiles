@@ -32,13 +32,36 @@ return require('packer').startup(function(use)
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'jose-elias-alvarez/null-ls.nvim'
   use 'MunifTanjim/prettier.nvim'
-  use 'NeogitOrg/neogit'
+  -- use({
+  --     "kdheepak/lazygit.nvim",
+  --     -- optional for floating window border decoration
+  --     requires = {
+  --         "nvim-lua/plenary.nvim",
+  --     },
+  -- })
   use 'sindrets/diffview.nvim'
   use 'almo7aya/openingh.nvim'
-  use 'yorickpeterse/nvim-pqf'
+  -- use 'yorickpeterse/nvim-pqf'
+  use 'rbgrouleff/bclose.vim'
+  use 'iberianpig/tig-explorer.vim'
   use {
       "ThePrimeagen/harpoon",
       branch = "harpoon2",
       requires = { {"nvim-lua/plenary.nvim"} }
   }
+  use({
+    "stevearc/quicker.nvim",
+    config = function()
+      require("quicker").setup()
+    end,
+  })
+ use({
+  'SuperBo/fugit2.nvim',
+  requires = { { 'MunifTanjim/nui.nvim' }
+  },
+  })
+  -- use {
+  --   "Al0den/notion.nvim",
+  --   requires = { { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" } }
+  -- }
 end)
